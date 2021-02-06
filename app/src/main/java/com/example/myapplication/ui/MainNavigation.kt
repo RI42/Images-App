@@ -9,6 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 
+// https://github.com/google/iosched/blob/master/mobile/src/main/java/com/google/samples/apps/iosched/ui/MainNavigation.kt
+
 /**
  * To be implemented by components that host top-level navigation destinations.
  */

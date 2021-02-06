@@ -66,6 +66,7 @@ android {
 
 dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-alpha13")
+    implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
     implementation(Deps.STDLIB)
     implementation(Deps.KOTLIN_REFLECT)
@@ -86,6 +87,7 @@ dependencies {
     implementation(Deps.RECYCLERVIEW)
 
     implementation("dev.chrisbanes.insetter:insetter:0.4.0")
+    implementation("dev.chrisbanes.insetter:insetter-dbx:0.4.0")
 
     implementation(Deps.COLLECTION_KTX)
     implementation(Deps.CORE_KTX)
@@ -116,24 +118,21 @@ dependencies {
     implementation(Deps.SWIPEREFRESHLAYOUT)
 
     implementation(Deps.RETROFIT)
-    implementation(Deps.GSON)
-    implementation(Deps.CONVERTER_GSON)
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation(Deps.KOTLINX_SERIALIZATION_JSON)
     implementation(Deps.LOGGING_INTERCEPTOR)
 
 //    implementation(Deps.EXOPLAYER)
 //    implementation(Deps.EXTENSION_MEDIASESSION)
 
-    implementation(Deps.PLAY_SERVICES_BASE)
+//    implementation(Deps.PLAY_SERVICES_BASE)
 //    implementation(Deps.PLAY_SERVICES_AUTH)
-    implementation(Deps.PLAY_SERVICES_LOCATION)
-    implementation(Deps.PLAY_SERVICES_MAPS)
-    implementation(Deps.MAPS_UTILS)
-
-    implementation(Deps.MAPS_KTX)
-    implementation(Deps.MAPS_UTILS_KTX)
-
-    implementation(Deps.COROUTINES_PLAY_SERVICES)
+//    implementation(Deps.PLAY_SERVICES_LOCATION)
+//    implementation(Deps.PLAY_SERVICES_MAPS)
+//    implementation(Deps.MAPS_UTILS)
+//    implementation(Deps.MAPS_KTX)
+//    implementation(Deps.MAPS_UTILS_KTX)
+//    implementation(Deps.COROUTINES_PLAY_SERVICES)
 
     implementation(Deps.ROOM_KTX)
     implementation(Deps.ROOM_RUNTIME)

@@ -1,12 +1,10 @@
-package com.example.myapplication.ui
+package com.example.myapplication.util
 
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import coil.Coil
 import coil.load
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.progressindicator.LinearProgressIndicator
