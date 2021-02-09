@@ -52,6 +52,7 @@ object Deps {
 
 
     const val COIL = "io.coil-kt:coil:${Versions.COIL}"
+    const val COIL_GIF = "io.coil-kt:coil-gif:${Versions.COIL}"
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"

@@ -5,6 +5,8 @@ plugins {
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version BuildPluginsVersion.KOTLIN
+//    id("org.jetbrains.kotlin.plugin.serialization") version BuildPluginsVersion.KOTLIN
 //    id("com.google.gms.google-services")
 //    id("com.google.firebase.crashlytics")
 }
@@ -70,10 +72,12 @@ dependencies {
 
     implementation(Deps.STDLIB)
     implementation(Deps.KOTLIN_REFLECT)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation(Deps.KOTLINX_COROUTINES_CORE)
     implementation(Deps.KOTLINX_COROUTINES_ANDROID)
 
     implementation(Deps.COIL)
+    implementation(Deps.COIL_GIF)
 
     implementation(Deps.APPCOMPAT)
     implementation(Deps.VECTORDRAWABLE_ANIMATED)
@@ -85,6 +89,7 @@ dependencies {
     implementation(Deps.BROWSER)
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
+    implementation ("androidx.paging:paging-runtime:3.0.0-alpha13")
 
     implementation("dev.chrisbanes.insetter:insetter:0.4.0")
     implementation("dev.chrisbanes.insetter:insetter-dbx:0.4.0")
