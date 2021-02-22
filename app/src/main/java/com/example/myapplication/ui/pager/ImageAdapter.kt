@@ -21,11 +21,13 @@ class ImageAdapter : PagingDataAdapter<ImageEntity, ImageAdapter.ImageViewHolder
         holder.bind(currentItem, position)
     }
 
+    fun getItemByPos(position: Int) = getItem(position)
+
     class ImageViewHolder(private val binding: RvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(image: ImageEntity?, position: Int) {
-            if (image!=null) {
+            if (image != null) {
                 binding.tv.text = position.toString()
                 binding.img.load(image.url)
             } else {

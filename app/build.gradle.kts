@@ -68,7 +68,7 @@ dependencies {
 
     implementation(Deps.STDLIB)
     implementation(Deps.KOTLIN_REFLECT)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation(Deps.KOTLINX_COROUTINES_CORE)
     implementation(Deps.KOTLINX_COROUTINES_ANDROID)
 
@@ -85,7 +85,8 @@ dependencies {
     implementation(Deps.BROWSER)
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
-    implementation ("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
+    implementation("jp.wasabeef:recyclerview-animators:4.0.2")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
 
     val insetter = "0.5.0"
     implementation("dev.chrisbanes.insetter:insetter:$insetter")

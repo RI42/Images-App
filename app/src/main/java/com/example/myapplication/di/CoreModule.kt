@@ -6,8 +6,9 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.consts.Consts
 import com.example.myapplication.data.ImageRepositoryProviderImpl
 import com.example.myapplication.db.AppDatabase
-import com.example.myapplication.di.qualifiers.TheCatApi
-import com.example.myapplication.di.qualifiers.TheDogApi
+import com.example.myapplication.di.qualifiers.CatSource
+import com.example.myapplication.di.qualifiers.DogSource
+import com.example.myapplication.domain.ImageRepository
 import com.example.myapplication.domain.ImageRepositoryProvider
 import com.example.myapplication.model.SourceType
 import com.example.myapplication.network.TheApi
@@ -32,52 +33,62 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class CoreModule {
+object CoreModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAppDb(@ApplicationContext context: Context): AppDatabase {
         return AppDatabase.createDatabase(context)
     }
 
-    @Singleton
     @Provides
-    @TheCatApi
-    @IntoMap
-    @SourceTypeKey(SourceType.CAT)
+    @Singleton
+    @CatSource
     fun provideCatService(
         client: OkHttpClient,
         jsonConverterFactory: Converter.Factory
     ): TheApi {
         Timber.d("provide CAT")
-        return Retrofit.Builder()
-            .baseUrl(Consts.THE_CAT_BASE_URL)
-            .client(client)
-            .addConverterFactory(jsonConverterFactory)
-            .build()
-            .create(TheApi::class.java)
+        return createApi(Consts.THE_CAT_BASE_URL, client, jsonConverterFactory)
     }
 
-    @Singleton
     @Provides
-    @TheDogApi
-    @IntoMap
-    @SourceTypeKey(SourceType.DOG)
+    @Singleton
+    @DogSource
     fun provideDogService(
         client: OkHttpClient,
         jsonConverterFactory: Converter.Factory
     ): TheApi {
         Timber.d("provide DOG")
-        return Retrofit.Builder()
-            .baseUrl(Consts.THE_DOG_BASE_URL)
-            .client(client)
-            .addConverterFactory(jsonConverterFactory)
-            .build()
-            .create(TheApi::class.java)
+        return createApi(Consts.THE_DOG_BASE_URL, client, jsonConverterFactory)
     }
 
-    @Singleton
+    @ExperimentalPagingApi
     @Provides
+    @Singleton
+    @IntoMap
+    @SourceTypeKey(SourceType.CAT)
+    fun provideCatImageRepository(
+        @CatSource api: TheApi,
+        factory: ImageRepositoryFactory
+    ): ImageRepository {
+        return factory.get(api, SourceType.CAT)
+    }
+
+    @ExperimentalPagingApi
+    @Provides
+    @Singleton
+    @IntoMap
+    @SourceTypeKey(SourceType.DOG)
+    fun provideDogImageRepository(
+        @DogSource api: TheApi,
+        factory: ImageRepositoryFactory
+    ): ImageRepository {
+        return factory.get(api, SourceType.DOG)
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
@@ -95,16 +106,27 @@ internal class CoreModule {
             .build()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideJson(): Json = Json { ignoreUnknownKeys = true }
 
     @ExperimentalSerializationApi
-    @Singleton
     @Provides
+    @Singleton
     fun provideJsonConverterFactory(json: Json): Converter.Factory =
         json.asConverterFactory("application/json".toMediaType())
 }
+
+private fun createApi(
+    baseUrl: String,
+    client: OkHttpClient,
+    jsonConverterFactory: Converter.Factory
+): TheApi = Retrofit.Builder()
+    .baseUrl(baseUrl)
+    .client(client)
+    .addConverterFactory(jsonConverterFactory)
+    .build()
+    .create(TheApi::class.java)
 
 @Module
 @InstallIn(SingletonComponent::class)

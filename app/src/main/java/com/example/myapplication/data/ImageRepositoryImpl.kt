@@ -35,4 +35,8 @@ class ImageRepositoryImpl @AssistedInject constructor(
         ) {
             db.imageDao().getNotShownImages(sourceType)
         }.flow
+
+    override suspend fun setShown(id: String) {
+        db.imageDao().setShown(id)
+    }
 }

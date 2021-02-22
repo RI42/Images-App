@@ -1,17 +1,18 @@
 package com.example.myapplication.ui.pager
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.map
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.request.ImageRequest
 import com.example.myapplication.R
 import com.example.myapplication.databinding.PagerFragmentBinding
-import com.example.myapplication.stacklayoutmanager.StackLayoutManager
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
 import com.example.myapplication.util.dataBinding
 import com.example.myapplication.util.viewLifecycleScope
@@ -37,43 +38,12 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
     private val model: PagerViewModel by viewModels()
     private val binding: PagerFragmentBinding by dataBinding() // { viewModel = model }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ImageAdapter()
-//        val layoutManager = object : LinearLayoutManager(requireContext()) {
-//            override fun canScrollVertically() = false
-//
-//            override fun smoothScrollToPosition(
-//                recyclerView: RecyclerView?,
-//                state: RecyclerView.State?,
-//                position: Int
-//            ) {
-//                Timber.d("smoothScroller: $position")
-//
-//                val smoothScroller: SmoothScroller = object : LinearSmoothScroller(requireContext()) {
-//                        override fun getVerticalSnapPreference(): Int {
-//                            return SNAP_TO_START
-//                        }
-//
-//                    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
-//                        return super.computeScrollVectorForPosition(targetPosition)
-//                    }
-//                    }
-//                smoothScroller.targetPosition = position
-//                startSmoothScroll(smoothScroller)
-//            }
-//        }
-//        layoutManager.isSmoothScrollbarEnabled = true
-//        object : StackLayoutManager(
-//            horizontalLayout = false,
-//            layoutInterpolator = ReverseStackInterpolator(),
-//            viewTransformer = ReverseStackInterpolator.Transformer::transform
-//        ) {
-//            override fun canScrollVertically() = false
-//        }
-
-        val layoutManager = object : StackLayoutManager(ScrollOrientation.BOTTOM_TO_TOP) {
+        val layoutManager = object : LinearLayoutManager(requireContext()) {
             override fun canScrollVertically() = false
         }
 
@@ -90,21 +60,23 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     Timber.d("viewHolder.bindingAdapterPosition ${viewHolder.bindingAdapterPosition}")
-                    binding.rv.scrollToPosition(viewHolder.bindingAdapterPosition + 1)
-//                    val item = adapter.getItem(viewHolder.bindingAdapterPosition)
+                    val item = adapter.getItemByPos(viewHolder.bindingAdapterPosition) ?: error("item not found")
+                    model.setShown(item)
                 }
             }
         )
         touchHelper.attachToRecyclerView(binding.rv)
 
+//        var anim: ViewPropertyAnimator? = null
         binding.btn.setOnClickListener {
-            Timber.d("layoutManager.findFirstVisibleItemPosition ${layoutManager.getFirstVisibleItemPosition()}")
-            val pos = layoutManager.getFirstVisibleItemPosition()
-            binding.rv.smoothScrollToPosition(pos + 1)
+            Timber.d("layoutManager.findFirstVisibleItemPosition ${layoutManager.findFirstVisibleItemPosition()}")
+            val item = adapter.getItemByPos(layoutManager.findFirstVisibleItemPosition())
+                ?: error("item not found")
+            model.setShown(item)
         }
 
 
-//        binding.rv.setHasFixedSize(true)
+        binding.rv.setHasFixedSize(true)
         binding.rv.layoutManager = layoutManager
         binding.rv.adapter = adapter
         viewLifecycleScope.launchWhenCreated {

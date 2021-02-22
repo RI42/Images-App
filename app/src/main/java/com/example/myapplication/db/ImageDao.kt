@@ -16,4 +16,6 @@ abstract class ImageDao : BaseDao<ImageEntity>() {
     @Query("DELETE FROM image_data WHERE type = :sourceType")
     abstract fun deleteSourceType(sourceType: SourceType)
 
+    @Query("UPDATE image_data SET isShown = 1 WHERE id = :id")
+    abstract suspend fun setShown(id: String)
 }
