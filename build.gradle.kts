@@ -6,6 +6,7 @@ plugins {
 }
 
 buildscript {
+//    val kotlin_version by extra("1.4.30")
     repositories {
         google()
         jcenter()
@@ -31,25 +32,27 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
+            useIR = true
             jvmTarget = "1.8"
             freeCompilerArgs = listOf(
-                    "-Xuse-experimental=" +
-                            "kotlin.Experimental," +
-                            "kotlinx.coroutines.ExperimentalCoroutinesApi," +
-                            "kotlinx.coroutines.InternalCoroutinesApi," +
-                            "kotlinx.coroutines.FlowPreview"
+                "-Xuse-experimental=" +
+                        "kotlin.Experimental," +
+                        "kotlinx.coroutines.ExperimentalCoroutinesApi," +
+                        "kotlinx.coroutines.InternalCoroutinesApi," +
+                        "kotlinx.coroutines.FlowPreview",
+                "-Xallow-result-return-type"
             )
         }
     }
 }
 
-tasks.register("clean", Delete::class.java) {
+tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
 
 fun isNonStable(version: String) = "^[0-9,.v-]+(-r)?$".toRegex().matches(version).not()
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
     rejectVersionIf {
         isNonStable(candidate.version) && !isNonStable(currentVersion)
     }

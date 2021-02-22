@@ -24,14 +24,14 @@ object Versions {
     const val APPCOMPAT = "1.3.0-beta01"
 
     const val COROUTINES = "1.4.2"
-    const val KOTLINX_SERIALIZATION = "1.0.1"
+    const val KOTLINX_SERIALIZATION = "1.1.0"
 
     // поменять версию в buildSrc/build.gradle
-    const val HILT = "2.31.2-alpha"
+    const val HILT = "2.32-alpha"
     const val ANDROIDX_HILT = "1.0.0-alpha03"
 
     const val VECTORDRAWABLE_ANIMATED = "1.1.0"
-    const val MEDIAROUTER = "1.2.1"
+    const val MEDIAROUTER = "1.2.2"
     const val EXIFINTERFACE = "1.3.2"
     const val CONSTRAINTLAYOUT = "2.0.4"
     const val VIEWPAGER2 = "1.0.0"
@@ -40,7 +40,7 @@ object Versions {
     const val MATERIAL = "1.3.0"
     const val RECYCLERVIEW = "1.2.0-beta01"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
-    const val ROOM = "2.3.0-beta01"
+    const val ROOM = "2.3.0-beta02"
     const val DATASTORE = "1.0.0-alpha02"
 
     const val STFALCON = "1.0.10"
@@ -56,10 +56,10 @@ object Versions {
 
     const val COLLECTION_KTX = "1.1.0"
     const val CORE_KTX = "1.5.0-beta01"
-    const val LIFECYCLE = "2.3.0-rc01"
-    const val SAVEDSTATE_KTX = "1.1.0-rc01"
-    const val ACTIVITY_KTX = "1.2.0-rc01"
-    const val FRAGMENT_KTX = "1.3.0-rc02"
+    const val LIFECYCLE = "2.3.0"
+    const val SAVEDSTATE_KTX = "1.1.0"
+    const val ACTIVITY_KTX = "1.2.0"
+    const val FRAGMENT_KTX = "1.3.0"
 
     const val COIL = "1.1.1"
 
@@ -84,14 +84,14 @@ object Versions {
     const val MAPS_UTILS = "2.2.0"
 
     const val PLAY_AUTH = "19.0.0"
-    const val PLAY_LOCATION = "17.1.0"
+    const val PLAY_LOCATION = "18.0.0"
     const val PLAY_MAPS = "17.0.0"
     const val PLAY_BASE = "17.6.0"
     const val PLAY_SAFETYNET = "17.0.0"
 
-    const val FIREBASE_BOM = "26.4.0"
+    const val FIREBASE_BOM = "26.5.0"
 
-    const val JUNIT = "4.13.1"
+    const val JUNIT = "4.13.2"
     const val MOCKITO = "3.5.0"
     const val MOCKITO_KOTLIN = "2.2.0"
     const val TEST_CORE = "1.3.0"

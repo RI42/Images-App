@@ -34,9 +34,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -67,7 +64,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0-alpha13")
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
     implementation(Deps.STDLIB)
@@ -89,10 +85,11 @@ dependencies {
     implementation(Deps.BROWSER)
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
-    implementation ("androidx.paging:paging-runtime:3.0.0-alpha13")
+    implementation ("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
 
-    implementation("dev.chrisbanes.insetter:insetter:0.4.0")
-    implementation("dev.chrisbanes.insetter:insetter-dbx:0.4.0")
+    val insetter = "0.5.0"
+    implementation("dev.chrisbanes.insetter:insetter:$insetter")
+    implementation("dev.chrisbanes.insetter:insetter-dbx:$insetter")
 
     implementation(Deps.COLLECTION_KTX)
     implementation(Deps.CORE_KTX)
