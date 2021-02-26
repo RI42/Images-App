@@ -8,18 +8,24 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.MainFragmentBinding
 import com.example.myapplication.ui.MainNavigationFragment
 import com.example.myapplication.ui.pager.PagerAdapter
-import com.example.myapplication.util.dataBinding
+import com.example.myapplication.util.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint
 class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
 
     private val model: MainViewModel by viewModels()
-    private val binding: MainFragmentBinding by dataBinding() // { viewModel = model }
+    private val binding by viewBinding(MainFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.appBar.applyInsetter {
+            type(statusBars = true) { padding(top = true) }
+        }
+
         binding.pager.adapter = PagerAdapter(this)
         binding.pager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->

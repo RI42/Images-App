@@ -14,7 +14,7 @@ import coil.request.ImageRequest
 import com.example.myapplication.R
 import com.example.myapplication.databinding.PagerFragmentBinding
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
-import com.example.myapplication.util.dataBinding
+import com.example.myapplication.util.viewBinding
 import com.example.myapplication.util.viewLifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,7 +36,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
     }
 
     private val model: PagerViewModel by viewModels()
-    private val binding: PagerFragmentBinding by dataBinding() // { viewModel = model }
+    private val binding by viewBinding(PagerFragmentBinding::bind)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
