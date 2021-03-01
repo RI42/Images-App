@@ -16,7 +16,6 @@ fun ImageData.toEntity(sourceType: SourceType) = ImageEntity(
     url = url,
     width = width,
     height = height,
-    liked = false,
-    isShown = false,
+    state = ImageState.NOT_SHOWN,
     type = sourceType
 )

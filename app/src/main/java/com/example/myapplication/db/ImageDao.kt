@@ -4,18 +4,21 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.model.ImageState
 import com.example.myapplication.model.SourceType
-import com.example.myapplication.util.BaseDao
+import com.example.myapplication.utils.BaseDao
 
 @Dao
 abstract class ImageDao : BaseDao<ImageEntity>() {
 
-    @Query("select * from image_data where isShown = 0 and type = :sourceType")
-    abstract fun getNotShownImages(sourceType: SourceType): PagingSource<Int, ImageEntity>
+    fun getNotShownImages(sourceType: SourceType) = get(sourceType, ImageState.NOT_SHOWN)
 
-    @Query("DELETE FROM image_data WHERE type = :sourceType")
-    abstract fun deleteSourceType(sourceType: SourceType)
+    @Query("select count(*) from image_data where state = :state and type = :sourceType")
+    abstract suspend fun countElements(sourceType: SourceType, state: ImageState): Int
 
-    @Query("UPDATE image_data SET isShown = 1 WHERE id = :id")
-    abstract suspend fun setShown(id: String)
+    @Query("select * from image_data where state = :state and type = :sourceType")
+    abstract fun get(sourceType: SourceType, state: ImageState): PagingSource<Int, ImageEntity>
+
+    @Query("UPDATE image_data SET state = :state WHERE id = :id")
+    abstract suspend fun setState(id: String, state: ImageState)
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication.util
+package com.example.myapplication.utils
 
 //class EnumConverterFactory : Converter.Factory() {
 //    override fun stringConverter(

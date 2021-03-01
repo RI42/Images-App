@@ -21,8 +21,7 @@ class MainApplication : Application() {
             Timber.plant(Timber.DebugTree())
             System.setProperty(DEBUG_PROPERTY_NAME, DEBUG_PROPERTY_VALUE_ON)
         }
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         val imageLoader = ImageLoader.Builder(this)
             .componentRegistry {

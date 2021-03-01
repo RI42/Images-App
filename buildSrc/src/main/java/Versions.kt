@@ -8,7 +8,7 @@ object SdkVersion {
 
 object BuildPluginsVersion {
     const val AGP = "4.1.2"
-    const val KOTLIN = "1.4.30"
+    const val KOTLIN = "1.4.31"
 
     const val NAVIGATION = "2.3.3"
     const val VERSIONS_PLUGIN = "0.36.0"
@@ -27,7 +27,7 @@ object Versions {
     const val KOTLINX_SERIALIZATION = "1.1.0"
 
     // поменять версию в buildSrc/build.gradle
-    const val HILT = "2.32-alpha"
+    const val HILT = "2.33-beta"
     const val ANDROIDX_HILT = "1.0.0-alpha03"
 
     const val VECTORDRAWABLE_ANIMATED = "1.1.0"
@@ -38,7 +38,7 @@ object Versions {
     const val CARDVIEW = "1.0.0"
     const val BROWSER = "1.3.0"
     const val MATERIAL = "1.3.0"
-    const val RECYCLERVIEW = "1.2.0-beta01"
+    const val RECYCLERVIEW = "1.2.0-beta02"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
     const val ROOM = "2.3.0-beta02"
     const val DATASTORE = "1.0.0-alpha02"
@@ -55,7 +55,7 @@ object Versions {
     const val ZXING_CORE = "3.3.3"
 
     const val COLLECTION_KTX = "1.1.0"
-    const val CORE_KTX = "1.5.0-beta01"
+    const val CORE_KTX = "1.5.0-beta02"
     const val LIFECYCLE = "2.3.0"
     const val SAVEDSTATE_KTX = "1.1.0"
     const val ACTIVITY_KTX = "1.2.0"
@@ -91,12 +91,16 @@ object Versions {
 
     const val FIREBASE_BOM = "26.5.0"
 
+    const val INSETTER = "0.5.0"
+
+    const val TRUTH_GOOGLE = "1.1.2"
+    const val TRUTH_ANDROIDX = "1.3.0"
     const val JUNIT = "4.13.2"
-    const val MOCKITO = "3.5.0"
+    const val MOCKITO = "3.8.0"
     const val MOCKITO_KOTLIN = "2.2.0"
     const val TEST_CORE = "1.3.0"
-    const val CORE_TESTING = "2.1.0"
-    const val ROBOLECTRIC = "4.5"
+    const val ARCH_CORE_TESTING = "2.1.0"
+    const val ROBOLECTRIC = "4.5.1"
     const val TEST_RUNNER = "1.3.0"
     const val ESPRESSO_CORE = "3.3.0"
     const val EXT_JUNIT = "1.1.2"

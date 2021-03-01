@@ -127,7 +127,7 @@ object TestDeps {
     const val MOCKITO_INLINE = "org.mockito:mockito-inline:${Versions.MOCKITO}"
     const val MOCKITO_KOTLIN = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.MOCKITO_KOTLIN}"
     const val TEST_CORE = "androidx.test:core-ktx:${Versions.TEST_CORE}"
-    const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
+    const val ARCH_CORE_TESTING = "androidx.arch.core:core-testing:${Versions.ARCH_CORE_TESTING}"
     const val ROBOLECTRIC = "org.robolectric:robolectric:${Versions.ROBOLECTRIC}"
     const val ROOM_TESTING = "androidx.room:room-testing:${Versions.ROOM}"
     const val KOTLINX_COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"

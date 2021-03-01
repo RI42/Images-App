@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.domain.ImageRepository
 import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.model.ImageState
 import com.example.myapplication.model.SourceType
 import com.example.myapplication.network.TheApi
 import dagger.assisted.Assisted
@@ -36,7 +37,7 @@ class ImageRepositoryImpl @AssistedInject constructor(
             db.imageDao().getNotShownImages(sourceType)
         }.flow
 
-    override suspend fun setShown(id: String) {
-        db.imageDao().setShown(id)
+    override suspend fun setState(id: String, state: ImageState) {
+        db.imageDao().setState(id, state)
     }
 }

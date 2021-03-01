@@ -2,6 +2,7 @@ package com.example.myapplication.di
 
 import android.content.Context
 import androidx.paging.ExperimentalPagingApi
+import coil.request.ImageRequest
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.consts.Consts
 import com.example.myapplication.data.ImageRepositoryProviderImpl
@@ -40,6 +41,10 @@ object CoreModule {
     fun provideAppDb(@ApplicationContext context: Context): AppDatabase {
         return AppDatabase.createDatabase(context)
     }
+
+    @Provides
+    fun provideImageRequestBuilder(@ApplicationContext context: Context) =
+        ImageRequest.Builder(context)
 
     @Provides
     @Singleton

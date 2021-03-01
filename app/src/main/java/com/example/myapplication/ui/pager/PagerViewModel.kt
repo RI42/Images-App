@@ -6,7 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.cachedIn
 import com.example.myapplication.domain.usecase.FetchImageUseCase
-import com.example.myapplication.domain.usecase.SetShownUseCase
+import com.example.myapplication.domain.usecase.SetDislikeUseCase
+import com.example.myapplication.domain.usecase.SetLikeUseCase
 import com.example.myapplication.model.ImageEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class PagerViewModel @ExperimentalPagingApi
 @Inject constructor(
     private val fetchImageUseCase: FetchImageUseCase,
-    private val setShownUseCase: SetShownUseCase,
+    private val setLikeUseCase: SetLikeUseCase,
+    private val setDislikeUseCase: SetDislikeUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -31,13 +33,20 @@ class PagerViewModel @ExperimentalPagingApi
     val images = fetchImageUseCase(pagerInfo.type)
         .cachedIn(viewModelScope)
 
-    fun setShown(item: ImageEntity) {
-        viewModelScope.launch {
-            setShownUseCase(item, pagerInfo.type)
-        }
-    }
-
     init {
         Timber.d("PagerViewModel $pagerInfo")
     }
+
+    fun setLike(item: ImageEntity) {
+        viewModelScope.launch {
+            setLikeUseCase(item)
+        }
+    }
+
+    fun setDislike(item: ImageEntity) {
+        viewModelScope.launch {
+            setDislikeUseCase(item)
+        }
+    }
+
 }

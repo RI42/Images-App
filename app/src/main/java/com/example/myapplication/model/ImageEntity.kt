@@ -13,7 +13,7 @@ data class ImageEntity(
     val url: String,
     val width: Int,
     val height: Int,
-    val liked: Boolean = false,
-    val isShown: Boolean = false,
+    val state: ImageState,
     val type: SourceType
 )
+

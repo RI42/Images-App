@@ -12,7 +12,7 @@ import com.example.myapplication.model.ImageEntity
     version = 1,
     exportSchema = false
 )
-@TypeConverters(SourceTypeConverter::class)
+@TypeConverters(ImageStateConverter::class, SourceTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun imageDao(): ImageDao
@@ -24,6 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
             AppDatabase::class.java,
             "app.db"
         )
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

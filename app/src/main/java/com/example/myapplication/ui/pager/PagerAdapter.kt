@@ -10,7 +10,6 @@ class PagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
         val pageType = arrayOf(
             PageInfo(SourceType.CAT, R.string.cat, R.drawable.ic_cat),
             PageInfo(SourceType.DOG, R.string.dog, R.drawable.ic_dog)
-
         )
     }
 

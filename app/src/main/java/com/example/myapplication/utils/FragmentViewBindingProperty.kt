@@ -1,18 +1,18 @@
-package com.example.myapplication.util
+package com.example.myapplication.utils
 
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.annotation.MainThread
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class FragmentDataBindingProperty<T : ViewDataBinding>(
-    private val initBlock: (T.() -> Unit)?
+class FragmentViewBindingProperty<T : ViewBinding>(
+    val bind: (View) -> T
 ) : ReadOnlyProperty<Fragment, T> {
 
     internal var viewBinding: T? = null
@@ -24,17 +24,10 @@ class FragmentDataBindingProperty<T : ViewDataBinding>(
 
         val view = thisRef.requireView()
         thisRef.viewLifecycleOwner.lifecycle.addObserver(lifecycleObserver)
-        return DataBindingUtil.bind<T>(view)?.apply {
-            viewBinding = this
-            lifecycleOwner = thisRef.viewLifecycleOwner
-            initBlock?.invoke(this)
-        } ?: throw IllegalStateException(
-            "view is not a root View for a layout or view hasn't been bound"
-        )
+        return bind(view).also { viewBinding = it }
     }
 
     private inner class BindingLifecycleObserver : DefaultLifecycleObserver {
-        val handler = Handler(Looper.getMainLooper())
 
         @MainThread
         override fun onDestroy(owner: LifecycleOwner) {
@@ -44,10 +37,14 @@ class FragmentDataBindingProperty<T : ViewDataBinding>(
             }
         }
     }
+
+    companion object {
+        val handler = Handler(Looper.getMainLooper())
+    }
 }
 
-inline fun <reified T : ViewDataBinding> Fragment.dataBinding(
-    noinline initBlock: (T.() -> Unit)? = null
+fun <T : ViewBinding> Fragment.viewBinding(
+    bind: (View) -> T
 ): ReadOnlyProperty<Fragment, T> {
-    return FragmentDataBindingProperty(initBlock)
+    return FragmentViewBindingProperty(bind)
 }

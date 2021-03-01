@@ -4,10 +4,10 @@ import androidx.room.TypeConverter
 import com.example.myapplication.model.SourceType
 
 class SourceTypeConverter {
-    @TypeConverter
-    fun fromSourceType(sourceType: SourceType) = sourceType.value
 
     @TypeConverter
-    fun toSourceType(value: Int) =
-        SourceType.values().find { it.value == value } ?: error("No such SourceType value")
+    fun from(sourceType: SourceType) = sourceType.id
+
+    @TypeConverter
+    fun to(id: Int) = SourceType.map.getValue(id)
 }

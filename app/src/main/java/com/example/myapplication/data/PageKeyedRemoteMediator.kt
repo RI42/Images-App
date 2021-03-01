@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.model.ImageState
 import com.example.myapplication.model.SourceType
 import com.example.myapplication.model.toEntity
 import com.example.myapplication.network.TheApi
@@ -19,7 +20,7 @@ import java.io.IOException
 class PageKeyedRemoteMediator(
     private val db: AppDatabase,
     private val theApi: TheApi,
-    private val sourceType: SourceType,
+    private val sourceType: SourceType
 ) : RemoteMediator<Int, ImageEntity>() {
 
     private val theDao = db.imageDao()
@@ -33,8 +34,12 @@ class PageKeyedRemoteMediator(
             when (loadType) {
                 LoadType.PREPEND -> MediatorResult.Success(endOfPaginationReached = true)
                 else -> {
+                    val count = db.imageDao().countElements(sourceType, ImageState.NOT_SHOWN)
+
+                    if (count > state.config.initialLoadSize) return MediatorResult.Success(false)
+
                     val limit = when (loadType) {
-                        LoadType.REFRESH -> state.config.initialLoadSize+state.config.prefetchDistance*10
+                        LoadType.REFRESH -> state.config.initialLoadSize + state.config.prefetchDistance
                         else -> state.config.pageSize
                     }
                     val data = theApi.fetchImage(limit).map { it.toEntity(sourceType) }

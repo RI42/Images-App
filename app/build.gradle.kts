@@ -68,7 +68,7 @@ dependencies {
 
     implementation(Deps.STDLIB)
     implementation(Deps.KOTLIN_REFLECT)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    implementation(Deps.KOTLINX_SERIALIZATION_JSON)
     implementation(Deps.KOTLINX_COROUTINES_CORE)
     implementation(Deps.KOTLINX_COROUTINES_ANDROID)
 
@@ -88,9 +88,7 @@ dependencies {
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
 
-    val insetter = "0.5.0"
-    implementation("dev.chrisbanes.insetter:insetter:$insetter")
-    implementation("dev.chrisbanes.insetter:insetter-dbx:$insetter")
+    implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
 
     implementation(Deps.COLLECTION_KTX)
     implementation(Deps.CORE_KTX)
@@ -122,7 +120,6 @@ dependencies {
 
     implementation(Deps.RETROFIT)
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation(Deps.KOTLINX_SERIALIZATION_JSON)
     implementation(Deps.LOGGING_INTERCEPTOR)
 
 //    implementation(Deps.EXOPLAYER)
@@ -142,10 +139,44 @@ dependencies {
     kapt(Deps.ROOM_COMPILER)
 
     coreLibraryDesugaring(Deps.DESUGAR_JDK_LIBS)
-    testImplementation(TestDeps.JUNIT)
-    androidTestImplementation(AndroidTestDeps.JUNIT)
 
-//    implementation(platform(Deps.FIREBASE_BOM))
-//    implementation(Deps.FIREBASE_CRASHLYTICS)
-//    implementation(Deps.FIREBASE_ANALYTICS)
+    // TEST
+    testImplementation(TestDeps.JUNIT)
+    testImplementation(TestDeps.ARCH_CORE_TESTING)
+    testImplementation(TestDeps.KOTLINX_COROUTINES_TEST)
+    testImplementation(TestDeps.MOCKITO_CORE)
+    testImplementation(TestDeps.MOCKITO_INLINE)
+    testImplementation(TestDeps.MOCKITO_KOTLIN)
+    testImplementation(TestDeps.ROBOLECTRIC)
+    testImplementation(TestDeps.TEST_CORE)
+    testImplementation(TestDeps.ROOM_TESTING)
+    testImplementation(AndroidTestDeps.JUNIT)
+
+
+//    testImplementation("org.hamcrest:hamcrest-all:1.3")
+//    testImplementation("androidx.test.ext:truth:${Versions.TRUTH_ANDROIDX}")
+    testImplementation("com.google.truth:truth:${Versions.TRUTH_GOOGLE}")
+
+//    androidTestImplementation("androidx.test.ext:truth:${Versions.TRUTH_ANDROIDX}")
+    androidTestImplementation("com.google.truth:truth:${Versions.TRUTH_GOOGLE}")
+
+    androidTestImplementation(AndroidTestDeps.FRAGMENT_TESTING)
+    androidTestImplementation(AndroidTestDeps.ESPRESSO_CORE)
+    androidTestImplementation(AndroidTestDeps.RUNNER)
+
+    // For instrumentation tests
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+
+    // For local unit tests
+    testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+hilt {
+    enableTransformForLocalTests = true
 }

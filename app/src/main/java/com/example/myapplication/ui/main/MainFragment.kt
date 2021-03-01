@@ -6,9 +6,9 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import com.example.myapplication.R
 import com.example.myapplication.databinding.MainFragmentBinding
-import com.example.myapplication.ui.MainNavigationFragment
 import com.example.myapplication.ui.pager.PagerAdapter
-import com.example.myapplication.util.viewBinding
+import com.example.myapplication.utils.MainNavigationFragment
+import com.example.myapplication.utils.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -34,6 +34,4 @@ class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
             tab.text = getString(pageInfo.stringId)
         }.attach()
     }
-
-
 }

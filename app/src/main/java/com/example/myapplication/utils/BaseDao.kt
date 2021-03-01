@@ -1,4 +1,4 @@
-package com.example.myapplication.util
+package com.example.myapplication.utils
 
 import androidx.room.*
 

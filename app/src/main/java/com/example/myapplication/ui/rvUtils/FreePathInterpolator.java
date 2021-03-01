@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.utils;
+package com.example.myapplication.ui.rvUtils;
 
 import android.graphics.Path;
 import android.graphics.PathMeasure;
