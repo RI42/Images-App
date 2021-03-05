@@ -66,9 +66,10 @@ class PagerViewModel @ExperimentalPagingApi
             val start = System.currentTimeMillis()
             try {
                 saveImageToStorageUseCase(image)
-                _msg.emit("Saved")
+                _msg.emit("Saved to Gallery")
             } catch (e: Exception) {
                 _msg.emit("Failed to save image")
+                Timber.d(e)
             } finally {
                 val end = System.currentTimeMillis()
                 if (end - start < minTime) {

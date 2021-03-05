@@ -72,8 +72,8 @@ dependencies {
     implementation(Deps.KOTLINX_COROUTINES_CORE)
     implementation(Deps.KOTLINX_COROUTINES_ANDROID)
 
-    implementation(Deps.COIL)
-    implementation(Deps.COIL_GIF)
+//    implementation(Deps.COIL)
+//    implementation(Deps.COIL_GIF)
 
     implementation(Deps.APPCOMPAT)
     implementation(Deps.VECTORDRAWABLE_ANIMATED)

@@ -29,9 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-
 import timber.log.Timber
-
 
 
 @AndroidEntryPoint
@@ -48,6 +46,9 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
             }
     }
 
+    private var onSuccess: (() -> Unit)? = null
+    private var onFailure: (() -> Unit)? = null
+
     private val pageInfo by lazy { requireArguments().getParcelable<PageInfo>(PAGE_INFO)!! }
     private val model: PagerViewModel by viewModels()
     private val binding by viewBinding(PagerFragmentBinding::bind)
@@ -56,6 +57,9 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         Timber.d("RequestPermission $it")
         if (it) {
             Toast.makeText(requireContext(), "granted", Toast.LENGTH_SHORT).show()
+            onSuccess?.invoke()
+        } else {
+            onFailure?.invoke()
         }
     }
 
@@ -65,10 +69,6 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
 
         val fadeThrough = MaterialFadeThrough()
-
-        // Begin watching for changes in the View hierarchy.
-        TransitionManager.beginDelayedTransition(binding.root, fadeThrough)
-
 
         val adapter = ImageAdapter(requireContext())
 //        val layoutManager = object : LinearLayoutManager(requireContext()) {
@@ -118,11 +118,6 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         binding.rv.adapter = adapter
         viewLifecycleScope.launchWhenCreated {
             model.images
-//                .map { pagingData ->
-//                    pagingData.map {
-//                        it to false
-//                    }
-//                }
                 .collectLatest {
                     adapter.submitData(it)
                 }
@@ -149,6 +144,8 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         viewLifecycleScope.launchWhenCreated {
             model.isLoading
                 .onEach {
+                    // Begin watching for changes in the View hierarchy.
+                    TransitionManager.beginDelayedTransition(binding.container, fadeThrough)
                     binding.download.isInvisible = it
                     binding.progress.isVisible = it
                 }
@@ -165,6 +162,8 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             saveImageToStorage(image)
         } else {
+            onSuccess = { saveImageToStorage(image) }
+
             when {
                 ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -187,44 +186,5 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
     private fun saveImageToStorage(image: ImageEntity) {
         model.saveMediaToStorage(image)
     }
-
-
-//    private fun saveMediaToStorage(bitmap: Bitmap) {
-//        val filename = "${System.currentTimeMillis()}.jpg"
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//            saveQ(filename, bitmap)
-//        } else {
-//            saveLegacy(filename, bitmap)
-//        }
-//
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.Q)
-//    private fun saveQ(filename: String, bitmap: Bitmap) {
-//        requireContext().contentResolver?.let { resolver ->
-//            val contentValues = ContentValues().apply {
-//                put(MediaColumns.DISPLAY_NAME, filename)
-//                put(MediaColumns.MIME_TYPE, "image/jpg")
-//                put(MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-//            }
-//            val imageUri = resolver.insert(Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-//                ?: throw RuntimeException("Failed to get image Uri")
-//            resolver.openOutputStream(imageUri)?.use {
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-//                Toast.makeText(requireContext(), "Saved to Photos", Toast.LENGTH_SHORT).show()
-//            } ?: throw RuntimeException("Failed to save image")
-//        } ?: throw RuntimeException("Failed to save image")
-//    }
-//
-//    private fun saveLegacy(filename: String, bitmap: Bitmap) {
-//        val imagesDir =
-//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-//        val image = File(imagesDir, filename)
-//        FileOutputStream(image).use {
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-//            Toast.makeText(requireContext(), "Saved to Photos", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
 
 }

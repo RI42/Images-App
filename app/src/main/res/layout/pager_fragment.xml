@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
@@ -50,15 +51,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
         android:text="Save"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
         android:visibility="visible"
         app:cornerRadius="50dp"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
         app:icon="@drawable/ic_download"
         app:layout_constraintBottom_toBottomOf="@+id/dislike"
         app:layout_constraintEnd_toStartOf="@id/like"
         app:layout_constraintStart_toEndOf="@id/dislike"
-        app:layout_constraintTop_toTopOf="@+id/dislike"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="@+id/dislike" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/like"

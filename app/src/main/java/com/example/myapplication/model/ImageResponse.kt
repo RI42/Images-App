@@ -4,14 +4,14 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class ImageData(
+data class ImageResponse(
     val id: String,
     val url: String,
     val width: Int,
     val height: Int,
 )
 
-fun ImageData.toEntity(sourceType: SourceType) = ImageEntity(
+fun ImageResponse.toEntity(sourceType: SourceType) = ImageEntity(
     id = id,
     url = url,
     width = width,
