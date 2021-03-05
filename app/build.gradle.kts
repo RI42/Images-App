@@ -87,6 +87,8 @@ dependencies {
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
     implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
 

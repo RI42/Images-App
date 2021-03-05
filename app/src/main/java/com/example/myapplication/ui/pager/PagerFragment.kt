@@ -2,42 +2,36 @@ package com.example.myapplication.ui.pager
 
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.AnimatedImageDrawable
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.provider.MediaStore.MediaColumns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import coil.Coil
-import coil.drawable.MovieDrawable
-import coil.request.ImageRequest
+import androidx.transition.TransitionManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.PagerFragmentBinding
 import com.example.myapplication.model.ImageEntity
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
+import com.example.myapplication.ui.rvUtils.StackLayoutManager
 import com.example.myapplication.utils.viewBinding
 import com.example.myapplication.utils.viewLifecycleScope
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+
 import timber.log.Timber
+
 
 
 @AndroidEntryPoint
@@ -69,8 +63,23 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ImageAdapter(requireContext(), ::saveImage)
-        val layoutManager = object : LinearLayoutManager(requireContext()) {
+
+        val fadeThrough = MaterialFadeThrough()
+
+        // Begin watching for changes in the View hierarchy.
+        TransitionManager.beginDelayedTransition(binding.root, fadeThrough)
+
+
+        val adapter = ImageAdapter(requireContext())
+//        val layoutManager = object : LinearLayoutManager(requireContext()) {
+//            override fun canScrollVertically() = false
+//        }
+
+//        val layoutManager = object : StackLayoutManager(ScrollOrientation.BOTTOM_TO_TOP, 1) {
+//            override fun canScrollVertically() = false
+//        }
+
+        val layoutManager = object : StackLayoutManager(horizontalLayout = false, maxViews = 1) {
             override fun canScrollVertically() = false
         }
 
@@ -109,6 +118,11 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         binding.rv.adapter = adapter
         viewLifecycleScope.launchWhenCreated {
             model.images
+//                .map { pagingData ->
+//                    pagingData.map {
+//                        it to false
+//                    }
+//                }
                 .collectLatest {
                     adapter.submitData(it)
                 }
@@ -126,23 +140,41 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
         binding.dislike.setOnClickListener(::onClick)
         binding.like.setOnClickListener(::onClick)
+        binding.download.setOnClickListener {
+            val image = adapter.getItemByPos(layoutManager.findFirstVisibleItemPosition())
+                ?: return@setOnClickListener
+            saveImage(it, image)
+        }
+
+        viewLifecycleScope.launchWhenCreated {
+            model.isLoading
+                .onEach {
+                    binding.download.isInvisible = it
+                    binding.progress.isVisible = it
+                }
+                .launchIn(this)
+
+            model.msg
+                .onEach { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+                .launchIn(this)
+        }
+
     }
 
     private fun saveImage(view: View, image: ImageEntity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            load(image)
+            saveImageToStorage(image)
         } else {
             when {
                 ContextCompat.checkSelfPermission(
                     requireContext(),
                     WRITE_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    Toast.makeText(requireContext(), "PERMISSION_GRANTED", Toast.LENGTH_SHORT)
-                        .show()
-                    load(image)
+                    saveImageToStorage(image)
                 }
                 shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE) -> {
                     Toast.makeText(requireContext(), "cmon", Toast.LENGTH_SHORT).show()
+                    register.launch(WRITE_EXTERNAL_STORAGE)
                 }
                 else -> {
                     register.launch(WRITE_EXTERNAL_STORAGE)
@@ -152,80 +184,8 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
     }
 
-    private fun load(image: ImageEntity) = lifecycleScope.launch {
-        val request = ImageRequest.Builder(requireContext())
-            .data(image.url)
-            .size(width = image.width, height = image.height)
-            .build()
-        try {
-            val drawable = Coil.execute(request).drawable!!
-            saveMediaToStorage(image.url, drawable)
-        } catch (e: Exception) {
-            Timber.d(e)
-        }
-    }
-
-    private fun saveMediaToStorage(url: String, drawable: Drawable) {
-
-        requireContext().contentResolver?.let { resolver ->
-            val filename = url.substring(url.lastIndexOf('/') + 1)
-            val extension = filename.substring(filename.lastIndexOf('.') + 1)
-            val mime = when (extension) {
-                "gif" -> "image/gif"
-                "png" -> "image/png"
-                else -> "image/jpeg"
-            }
-
-            val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-            } else {
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            }
-            Timber.d("filename $filename, mime $mime")
-            val path = Environment.DIRECTORY_PICTURES + "/${pageInfo.type.name}"
-            val contentValues = ContentValues().apply {
-                put(MediaColumns.DISPLAY_NAME, filename)
-                put(MediaColumns.MIME_TYPE, mime)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    put(MediaColumns.RELATIVE_PATH, path)
-                    put(MediaColumns.IS_PENDING, 1)
-                }
-            }
-
-            val imageUri = resolver.insert(collection, contentValues)
-                ?: throw RuntimeException("Failed to get image Uri")
-            if (extension == "gif") {
-                //todo gif
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    drawable as AnimatedImageDrawable
-                } else {
-                    drawable as MovieDrawable
-                }
-
-                val bitmap = drawable.toBitmap()
-                resolver.openOutputStream(imageUri)?.use {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-                    Toast.makeText(requireContext(), "Saved to $path", Toast.LENGTH_SHORT).show()
-                } ?: throw RuntimeException("Failed to save image")
-            } else {
-                val bitmap = (drawable as BitmapDrawable).bitmap
-
-                val compressFormat = when (extension) {
-                    "png" -> Bitmap.CompressFormat.PNG
-                    else -> Bitmap.CompressFormat.JPEG
-                }
-                resolver.openOutputStream(imageUri)?.use {
-                    bitmap.compress(compressFormat, 100, it)
-                    Toast.makeText(requireContext(), "Saved to $path", Toast.LENGTH_SHORT).show()
-                } ?: throw RuntimeException("Failed to save image")
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                contentValues.clear()
-                contentValues.put(MediaColumns.IS_PENDING, 0)
-                resolver.update(imageUri, contentValues, null, null)
-            }
-
-        } ?: throw RuntimeException("Failed to save image")
+    private fun saveImageToStorage(image: ImageEntity) {
+        model.saveMediaToStorage(image)
     }
 
 

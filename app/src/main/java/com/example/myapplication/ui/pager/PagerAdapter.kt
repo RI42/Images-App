@@ -8,8 +8,8 @@ import com.example.myapplication.model.SourceType
 class PagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
     companion object {
         val pageType = arrayOf(
-            PageInfo(SourceType.CAT, R.string.cat, R.drawable.ic_cat),
-            PageInfo(SourceType.DOG, R.string.dog, R.drawable.ic_dog)
+            PageInfo(SourceType.CAT, R.string.cats, R.drawable.ic_cat),
+            PageInfo(SourceType.DOG, R.string.dogs, R.drawable.ic_dog)
         )
     }
 

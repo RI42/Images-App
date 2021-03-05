@@ -1,5 +1,5 @@
 object SdkVersion {
-    const val MIN_SDK_VERSION = 21
+    const val MIN_SDK_VERSION = 23
     const val TARGET_SDK_VERSION = 30
     const val COMPILE_SDK_VERSION = 30
     const val BUILD_TOOLS_VERSION = "30.0.3"
@@ -11,7 +11,7 @@ object BuildPluginsVersion {
     const val KOTLIN = "1.4.31"
 
     const val NAVIGATION = "2.3.3"
-    const val VERSIONS_PLUGIN = "0.36.0"
+    const val VERSIONS_PLUGIN = "0.38.0"
     const val GOOGLE_SERVICES = "4.3.5"
     const val FIREBASE_CRASHLYTICS_GRADLE = "2.4.1"
 
@@ -23,7 +23,7 @@ object Versions {
 
     const val APPCOMPAT = "1.3.0-beta01"
 
-    const val COROUTINES = "1.4.2"
+    const val COROUTINES = "1.4.3"
     const val KOTLINX_SERIALIZATION = "1.1.0"
 
     // поменять версию в buildSrc/build.gradle

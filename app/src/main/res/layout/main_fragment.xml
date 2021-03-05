@@ -8,22 +8,22 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
-        app:elevation="0dp"
         style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
-            android:elevation="0dp"
             android:layout_height="wrap_content"
+            android:elevation="0dp"
             android:minHeight="?attr/actionBarSize" />
 
         <com.google.android.material.tabs.TabLayout
-            style="@style/Widget.MaterialComponents.TabLayout.PrimarySurface"
             android:id="@+id/tabs"
+            style="@style/Widget.MaterialComponents.TabLayout.PrimarySurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorHeight="6dp"
@@ -33,18 +33,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_cat"
-                android:text="@string/cat" />
+                android:text="@string/cats" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_dog"
-                android:text="@string/dog" />
+                android:text="@string/dogs" />
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
+        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
