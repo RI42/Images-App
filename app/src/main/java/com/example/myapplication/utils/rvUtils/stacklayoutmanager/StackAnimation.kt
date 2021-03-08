@@ -1,7 +1,7 @@
-package com.example.myapplication.ui.rvUtils.stacklayoutmanager
+package com.example.myapplication.utils.rvUtils.stacklayoutmanager
 
 import android.view.View
-import com.example.myapplication.ui.rvUtils.stacklayoutmanager.StackLayoutManager.ScrollOrientation
+import com.example.myapplication.utils.rvUtils.stacklayoutmanager.StackLayoutManager.ScrollOrientation
 
 abstract class StackAnimation(scrollOrientation: ScrollOrientation, visibleCount: Int) {
 

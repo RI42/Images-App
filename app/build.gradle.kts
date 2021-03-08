@@ -39,7 +39,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        dataBinding = true
     }
 
     buildTypes {
@@ -111,6 +111,10 @@ dependencies {
     implementation(Deps.NAVIGATION_UI_KTX)
 
     implementation(Deps.HILT_ANDROID)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
     kapt(Deps.HILT_COMPILER)
     implementation(Deps.HILT_LIFECYCLE_VIEWMODEL)
     implementation(Deps.HILT_NAVIGATION_FRAGMENT)

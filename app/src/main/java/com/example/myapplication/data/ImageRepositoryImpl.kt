@@ -6,38 +6,47 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.domain.ImageRepository
+import com.example.myapplication.domain.ImageSourceProvider
+import com.example.myapplication.model.FilterInfo
 import com.example.myapplication.model.ImageEntity
 import com.example.myapplication.model.ImageState
 import com.example.myapplication.model.SourceType
-import com.example.myapplication.network.TheApi
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
-import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @ExperimentalPagingApi
-class ImageRepositoryImpl @AssistedInject constructor(
+@Singleton
+class ImageRepositoryImpl @Inject constructor(
     private val db: AppDatabase,
-    @Assisted private val theApi: TheApi,
-    @Assisted private val sourceType: SourceType,
+    private val imageSourceProvider: ImageSourceProvider,
 ) : ImageRepository {
 
-    init {
-        Timber.d("sourceType: $sourceType")
-    }
-
-    override fun getImagesPagingFlow(pageSize: Int): Flow<PagingData<ImageEntity>> =
+    override fun getImagesPagingFlow(
+        pageSize: Int,
+        sourceType: SourceType
+    ): Flow<PagingData<ImageEntity>> =
         Pager(
-            config = PagingConfig(
-                pageSize = pageSize,
-                enablePlaceholders = false
-            ),
-            remoteMediator = PageKeyedRemoteMediator(db, theApi, sourceType)
+            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            remoteMediator = PageKeyedRemoteMediator(
+                db,
+                imageSourceProvider[sourceType],
+                sourceType
+            )
         ) {
             db.imageDao().getNotShownImages(sourceType)
         }.flow
 
-    override suspend fun setState(id: String, state: ImageState) {
-        db.imageDao().setState(id, state)
+    override suspend fun setState(image: ImageEntity, state: ImageState) {
+        db.imageDao().updateImage(image.copy(state = state))
     }
+
+    override fun filteredImagesFlow(
+        pageSize: Int,
+        info: FilterInfo
+    ): Flow<PagingData<ImageEntity>> = Pager(
+        config = PagingConfig(pageSize = pageSize, enablePlaceholders = true),
+    ) {
+        db.imageDao().getFiltered(info.sourceType, info.imageState)
+    }.flow
 }

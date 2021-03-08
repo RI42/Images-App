@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.consts.Consts
-import com.example.myapplication.data.ImageRepositoryProviderImpl
+import com.example.myapplication.data.ImageRepositoryImpl
+import com.example.myapplication.data.ImageSourceProviderImpl
 import com.example.myapplication.db.AppDatabase
-import com.example.myapplication.di.qualifiers.CatSource
-import com.example.myapplication.di.qualifiers.DogSource
 import com.example.myapplication.domain.ImageRepository
-import com.example.myapplication.domain.ImageRepositoryProvider
+import com.example.myapplication.domain.ImageSourceProvider
 import com.example.myapplication.model.SourceType
 import com.example.myapplication.network.TheApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -27,7 +26,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -43,48 +41,26 @@ object CoreModule {
 
     @Provides
     @Singleton
-    @CatSource
+//    @CatSource
+    @IntoMap
+    @SourceTypeKey(SourceType.CAT)
     fun provideCatService(
         client: OkHttpClient,
         jsonConverterFactory: Converter.Factory
     ): TheApi {
-        Timber.d("provide CAT")
         return createApi(Consts.THE_CAT_BASE_URL, client, jsonConverterFactory)
     }
 
     @Provides
     @Singleton
-    @DogSource
+//    @DogSource
+    @IntoMap
+    @SourceTypeKey(SourceType.DOG)
     fun provideDogService(
         client: OkHttpClient,
         jsonConverterFactory: Converter.Factory
     ): TheApi {
-        Timber.d("provide DOG")
         return createApi(Consts.THE_DOG_BASE_URL, client, jsonConverterFactory)
-    }
-
-    @ExperimentalPagingApi
-    @Provides
-    @Singleton
-    @IntoMap
-    @SourceTypeKey(SourceType.CAT)
-    fun provideCatImageRepository(
-        @CatSource api: TheApi,
-        factory: ImageRepositoryFactory
-    ): ImageRepository {
-        return factory.get(api, SourceType.CAT)
-    }
-
-    @ExperimentalPagingApi
-    @Provides
-    @Singleton
-    @IntoMap
-    @SourceTypeKey(SourceType.DOG)
-    fun provideDogImageRepository(
-        @DogSource api: TheApi,
-        factory: ImageRepositoryFactory
-    ): ImageRepository {
-        return factory.get(api, SourceType.DOG)
     }
 
     @Provides
@@ -132,7 +108,10 @@ private fun createApi(
 @InstallIn(SingletonComponent::class)
 interface BindsModule {
 
+    @Binds
+    fun bindsImageSourceProvider(imageSourceProviderImpl: ImageSourceProviderImpl): ImageSourceProvider
+
     @ExperimentalPagingApi
     @Binds
-    fun bindsImage(imageRepositoryProviderImpl: ImageRepositoryProviderImpl): ImageRepositoryProvider
+    fun bindsImageRepository(imageRepositoryImpl: ImageRepositoryImpl): ImageRepository
 }

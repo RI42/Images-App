@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.rvUtils
+package com.example.myapplication.utils.rvUtils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.cachedIn
-import com.example.myapplication.domain.usecase.FetchImageUseCase
+import com.example.myapplication.domain.usecase.FetchImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
 import com.example.myapplication.domain.usecase.SetDislikeUseCase
 import com.example.myapplication.domain.usecase.SetLikeUseCase
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PagerViewModel @ExperimentalPagingApi
 @Inject constructor(
-    private val fetchImageUseCase: FetchImageUseCase,
+    private val fetchImagesUseCase: FetchImagesUseCase,
     private val setLikeUseCase: SetLikeUseCase,
     private val setDislikeUseCase: SetDislikeUseCase,
     private val saveImageToStorageUseCase: SaveImageToStorageUseCase,
@@ -36,7 +36,7 @@ class PagerViewModel @ExperimentalPagingApi
     private val pagerInfo =
         savedStateHandle.get<PageInfo>(PAGE_INFO) ?: error("$PAGE_INFO is not found")
 
-    val images = fetchImageUseCase(pagerInfo.type)
+    val images = fetchImagesUseCase(pagerInfo.type)
         .cachedIn(viewModelScope)
 
     val isLoading = MutableStateFlow(false)
@@ -59,7 +59,7 @@ class PagerViewModel @ExperimentalPagingApi
         }
     }
 
-    fun saveMediaToStorage(image: ImageEntity) {
+    fun saveImageToStorage(image: ImageEntity) {
         isLoading.value = true
         viewModelScope.launch {
             val minTime = 1000

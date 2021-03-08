@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.rvUtils.stacklayoutmanager
+package com.example.myapplication.utils.rvUtils.stacklayoutmanager
 
 import android.view.View
 

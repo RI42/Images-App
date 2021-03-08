@@ -17,5 +17,5 @@ fun ImageResponse.toEntity(sourceType: SourceType) = ImageEntity(
     width = width,
     height = height,
     state = ImageState.NOT_SHOWN,
-    type = sourceType
+    sourceType = sourceType
 )

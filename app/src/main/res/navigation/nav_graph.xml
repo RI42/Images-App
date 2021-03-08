@@ -9,5 +9,18 @@
         android:id="@+id/mainFragment"
         android:name="com.example.myapplication.ui.main.MainFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/goto_history"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.myapplication.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/history_fragment" />
 </navigation>
