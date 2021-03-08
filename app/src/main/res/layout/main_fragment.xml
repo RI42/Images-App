@@ -25,8 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
+                android:minHeight="?attr/actionBarSize"
                 app:menu="@menu/main_fragment_menu"
-                android:minHeight="?attr/actionBarSize" />
+                app:title="@string/app_name" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -52,9 +53,9 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
-            android:elevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:elevation="0dp"
             android:orientation="horizontal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

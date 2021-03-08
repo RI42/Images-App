@@ -2,6 +2,7 @@ package com.example.myapplication.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
@@ -60,9 +61,9 @@ class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
         }
 
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
-//            val pageInfo = PagerAdapter.pageType[position]
-//            tab.icon = AppCompatResources.getDrawable(requireContext(), pageInfo.iconId)
-//            tab.text = getString(pageInfo.stringId)
+            val pageInfo = PagerAdapter.pageType[position]
+            tab.icon = AppCompatResources.getDrawable(requireContext(), pageInfo.iconId)
+            tab.text = getString(pageInfo.stringId)
         }.attach()
     }
 }
