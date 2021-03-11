@@ -20,9 +20,9 @@ class ImageSavingHelper(
     private lateinit var image: ImageEntity
 
     private val register =
-        fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            Timber.d("RequestPermission $it")
-            if (it) {
+        fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            Timber.d("RequestPermission $isGranted")
+            if (isGranted) {
                 Toast.makeText(context, "granted", Toast.LENGTH_SHORT).show()
                 onSuccess?.invoke(image)
             } else {

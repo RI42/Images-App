@@ -10,7 +10,7 @@ object BuildPluginsVersion {
     const val AGP = "4.1.2"
     const val KOTLIN = "1.4.31"
 
-    const val NAVIGATION = "2.3.3"
+    const val NAVIGATION = "2.3.4"
     const val VERSIONS_PLUGIN = "0.38.0"
     const val GOOGLE_SERVICES = "4.3.5"
     const val FIREBASE_CRASHLYTICS_GRADLE = "2.4.1"
@@ -28,7 +28,7 @@ object Versions {
 
     // поменять версию в buildSrc/build.gradle
     const val HILT = "2.33-beta"
-    const val ANDROIDX_HILT = "1.0.0-alpha03"
+    const val ANDROIDX_HILT = "1.0.0-beta01"
 
     const val VECTORDRAWABLE_ANIMATED = "1.1.0"
     const val MEDIAROUTER = "1.2.2"
@@ -40,7 +40,7 @@ object Versions {
     const val MATERIAL = "1.3.0"
     const val RECYCLERVIEW = "1.2.0-beta02"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
-    const val ROOM = "2.3.0-beta02"
+    const val ROOM = "2.3.0-beta03"
     const val DATASTORE = "1.0.0-alpha02"
 
     const val STFALCON = "1.0.10"
@@ -55,11 +55,11 @@ object Versions {
     const val ZXING_CORE = "3.3.3"
 
     const val COLLECTION_KTX = "1.1.0"
-    const val CORE_KTX = "1.5.0-beta02"
+    const val CORE_KTX = "1.5.0-beta03"
     const val LIFECYCLE = "2.3.0"
     const val SAVEDSTATE_KTX = "1.1.0"
-    const val ACTIVITY_KTX = "1.2.0"
-    const val FRAGMENT_KTX = "1.3.0"
+    const val ACTIVITY_KTX = "1.2.1"
+    const val FRAGMENT_KTX = "1.3.1"
 
     const val COIL = "1.1.1"
 

@@ -86,7 +86,7 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta01")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta02")
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
 
@@ -111,14 +111,10 @@ dependencies {
     implementation(Deps.NAVIGATION_UI_KTX)
 
     implementation(Deps.HILT_ANDROID)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
     kapt(Deps.HILT_COMPILER)
-    implementation(Deps.HILT_LIFECYCLE_VIEWMODEL)
-    implementation(Deps.HILT_NAVIGATION_FRAGMENT)
-    kapt(Deps.HILT_ANDROIDX_COMPILER)
+//    implementation(Deps.HILT_LIFECYCLE_VIEWMODEL)
+//    implementation(Deps.HILT_NAVIGATION_FRAGMENT)
+//    kapt(Deps.HILT_ANDROIDX_COMPILER)
 
     implementation(Deps.TIMBER)
 
