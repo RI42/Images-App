@@ -1,9 +1,9 @@
 package com.example.myapplication.model
 
-enum class ImageState(val id: Int) {
-    NOT_SHOWN(0),
-    LIKE(1),
-    DISLIKE(2);
+enum class ImageState(val id: String) {
+    NOT_SHOWN("not_shown"),
+    LIKE("liked"),
+    DISLIKE("disliked");
 
     companion object {
         val map = values().associateBy { it.id }

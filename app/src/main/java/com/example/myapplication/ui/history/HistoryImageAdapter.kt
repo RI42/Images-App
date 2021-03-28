@@ -7,7 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.databinding.HisrotyRvItemBinding
+import com.example.myapplication.databinding.HistoryRvItemBinding
 import com.example.myapplication.model.ImageEntity
 import timber.log.Timber
 
@@ -17,7 +17,7 @@ class HistoryImageAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val binding =
-            HisrotyRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HistoryRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ImageViewHolder(binding)
     }
 
@@ -31,7 +31,7 @@ class HistoryImageAdapter(
     fun getItemByPos(position: Int) =
         if (position != RecyclerView.NO_POSITION) getItem(position) else null
 
-    inner class ImageViewHolder(private val binding: HisrotyRvItemBinding) :
+    inner class ImageViewHolder(private val binding: HistoryRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(image: ImageEntity) {

@@ -3,7 +3,6 @@ package com.example.myapplication.ui.pager
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.cachedIn
 import com.example.myapplication.domain.usecase.FetchImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
@@ -20,8 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class PagerViewModel @ExperimentalPagingApi
-@Inject constructor(
+class PagerViewModel @Inject constructor(
     private val fetchImagesUseCase: FetchImagesUseCase,
     private val setLikeUseCase: SetLikeUseCase,
     private val setDislikeUseCase: SetDislikeUseCase,

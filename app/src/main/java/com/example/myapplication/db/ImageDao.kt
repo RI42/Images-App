@@ -20,15 +20,24 @@ abstract class ImageDao : BaseDao<ImageEntity>() {
     @Query("select * from image_data where state = :state and sourceType = :sourceType")
     abstract fun get(sourceType: SourceType, state: ImageState): PagingSource<Int, ImageEntity>
 
-    @Query("UPDATE image_data SET state = :state WHERE id = :id and sourceType = :sourceType")
+    @Query("UPDATE image_data SET state = :state WHERE id = :id AND sourceType = :sourceType")
     abstract suspend fun setState(id: String, sourceType: SourceType, state: ImageState)
 
     @Update
     abstract suspend fun updateImage(image: ImageEntity)
 
-    @Query("select * from image_data where state in (:state) and sourceType in (:sourceType)")
+    @Query(
+        """
+        SELECT * FROM image_data 
+        WHERE state NOT IN (:exclude) 
+            AND (:sourceTypeSize = 0 OR sourceType IN (:sourceType)) 
+            AND (:stateSize = 0 OR state IN (:state))"""
+    )
     abstract fun getFiltered(
         sourceType: Set<SourceType>,
-        state: Set<ImageState>
+        state: Set<ImageState>,
+        sourceTypeSize: Int = sourceType.size,
+        stateSize: Int = state.size,
+        exclude: Set<ImageState> = setOf(ImageState.NOT_SHOWN)
     ): PagingSource<Int, ImageEntity>
 }

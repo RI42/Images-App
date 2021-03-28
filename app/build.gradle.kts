@@ -6,7 +6,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     kotlin("plugin.serialization") version BuildPluginsVersion.KOTLIN
-//    id("org.jetbrains.kotlin.plugin.serialization") version BuildPluginsVersion.KOTLIN
 //    id("com.google.gms.google-services")
 //    id("com.google.firebase.crashlytics")
 }
@@ -26,7 +25,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
-        resConfigs("en", "ru")
+        resConfigs("en")
     }
 
     compileOptions {
@@ -86,9 +85,8 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta02")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta03")
     implementation("com.github.bumptech.glide:glide:4.12.0")
-
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
 

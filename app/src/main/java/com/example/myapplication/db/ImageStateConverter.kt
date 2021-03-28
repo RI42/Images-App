@@ -6,8 +6,8 @@ import com.example.myapplication.model.ImageState
 class ImageStateConverter {
 
     @TypeConverter
-    fun from(imageState: ImageState) = imageState.id
+    fun fromImageState(imageState: ImageState) = imageState.id
 
     @TypeConverter
-    fun to(id: Int) = ImageState.map.getValue(id)
+    fun toImageState(id: String) = ImageState.map.getValue(id)
 }

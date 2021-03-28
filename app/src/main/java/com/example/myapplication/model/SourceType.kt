@@ -1,8 +1,8 @@
 package com.example.myapplication.model
 
-enum class SourceType(val id: Int) {
-    CAT(1),
-    DOG(2);
+enum class SourceType(val id: String) {
+    CAT("cat"),
+    DOG("dog");
 
     companion object {
         val map = values().associateBy { it.id }

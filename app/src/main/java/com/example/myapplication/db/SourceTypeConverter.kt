@@ -6,8 +6,8 @@ import com.example.myapplication.model.SourceType
 class SourceTypeConverter {
 
     @TypeConverter
-    fun from(sourceType: SourceType) = sourceType.id
+    fun fromSourceType(sourceType: SourceType) = sourceType.id
 
     @TypeConverter
-    fun to(id: Int) = SourceType.map.getValue(id)
+    fun toSourceType(id: String) = SourceType.map.getValue(id)
 }

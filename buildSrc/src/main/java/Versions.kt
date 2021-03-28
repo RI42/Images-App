@@ -7,8 +7,8 @@ object SdkVersion {
 
 
 object BuildPluginsVersion {
-    const val AGP = "4.1.2"
-    const val KOTLIN = "1.4.31"
+    const val AGP = "4.1.3"
+    const val KOTLIN = "1.4.32"
 
     const val NAVIGATION = "2.3.4"
     const val VERSIONS_PLUGIN = "0.38.0"
@@ -20,8 +20,6 @@ object BuildPluginsVersion {
 }
 
 object Versions {
-
-    const val APPCOMPAT = "1.3.0-beta01"
 
     const val COROUTINES = "1.4.3"
     const val KOTLINX_SERIALIZATION = "1.1.0"
@@ -38,9 +36,9 @@ object Versions {
     const val CARDVIEW = "1.0.0"
     const val BROWSER = "1.3.0"
     const val MATERIAL = "1.3.0"
-    const val RECYCLERVIEW = "1.2.0-beta02"
+    const val RECYCLERVIEW = "1.2.0-rc01"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
-    const val ROOM = "2.3.0-beta03"
+    const val ROOM = "2.3.0-rc01"
     const val DATASTORE = "1.0.0-alpha02"
 
     const val STFALCON = "1.0.10"
@@ -55,11 +53,12 @@ object Versions {
     const val ZXING_CORE = "3.3.3"
 
     const val COLLECTION_KTX = "1.1.0"
-    const val CORE_KTX = "1.5.0-beta03"
-    const val LIFECYCLE = "2.3.0"
+    const val APPCOMPAT = "1.3.0-rc01"
+    const val CORE_KTX = "1.5.0-rc01"
+    const val LIFECYCLE = "2.3.1"
     const val SAVEDSTATE_KTX = "1.1.0"
-    const val ACTIVITY_KTX = "1.2.1"
-    const val FRAGMENT_KTX = "1.3.1"
+    const val ACTIVITY_KTX = "1.2.2"
+    const val FRAGMENT_KTX = "1.3.2"
 
     const val COIL = "1.1.1"
 
