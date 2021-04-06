@@ -41,7 +41,6 @@ object CoreModule {
 
     @Provides
     @Singleton
-//    @CatSource
     @IntoMap
     @SourceTypeKey(SourceType.CAT)
     fun provideCatService(
@@ -53,7 +52,6 @@ object CoreModule {
 
     @Provides
     @Singleton
-//    @DogSource
     @IntoMap
     @SourceTypeKey(SourceType.DOG)
     fun provideDogService(

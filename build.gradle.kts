@@ -6,11 +6,8 @@ plugins {
 }
 
 buildscript {
-val kotlin_version by extra("1.4.31")
-    //    val kotlin_version by extra("1.4.30")
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -26,7 +23,6 @@ val kotlin_version by extra("1.4.31")
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven("https://jitpack.io")
     }

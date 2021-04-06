@@ -28,8 +28,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    val filteredImagesUseCase: FilteredImagesUseCase,
-    val saveImageToStorageUseCase: SaveImageToStorageUseCase,
+    private val filteredImagesUseCase: FilteredImagesUseCase,
+    private val saveImageToStorageUseCase: SaveImageToStorageUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
