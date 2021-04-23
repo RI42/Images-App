@@ -63,7 +63,6 @@ android {
 }
 
 dependencies {
-    implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
     implementation(Deps.STDLIB)
     implementation(Deps.KOTLIN_REFLECT)
@@ -85,7 +84,7 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0-beta03")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.0-rc01")
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")

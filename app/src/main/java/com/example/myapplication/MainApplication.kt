@@ -16,6 +16,11 @@ class MainApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
             System.setProperty(DEBUG_PROPERTY_NAME, DEBUG_PROPERTY_VALUE_ON)
+//            val d = Thread.getDefaultUncaughtExceptionHandler()
+//            Thread.setDefaultUncaughtExceptionHandler { t, e ->
+//                Timber.e(e)
+//                d?.uncaughtException(t, e)
+//            }
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
