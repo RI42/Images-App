@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 // TODO: зарефакторить
@@ -101,7 +100,7 @@ class SaveImageToStorageUseCase @Inject constructor(
 }
 
 private fun getDirName(type: SourceType) =
-    "${type.name[0]}${type.name.substring(1).toLowerCase(Locale.getDefault())}s"
+    "${type.name[0]}${type.name.substring(1).lowercase()}s"
 
 private fun getNameFromUrl(url: String) = url.substring(url.lastIndexOf('/') + 1)
 private fun getMimeTypeByExtension(extension: String) = when (extension) {
@@ -114,9 +113,9 @@ private data class FileName(
     val title: String,
     val extension: String,
     val mimeType: String
-)
-
-private val FileName.name get() = "$title.$extension"
+) {
+    val name get() = "$title.$extension"
+}
 
 private fun FileName(url: String): FileName {
     val name = getNameFromUrl(url)

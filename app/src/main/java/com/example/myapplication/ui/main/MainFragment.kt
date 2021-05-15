@@ -9,7 +9,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.MainFragmentBinding
 import com.example.myapplication.ui.pager.PagerAdapter
 import com.example.myapplication.utils.MainNavigationFragment
-import com.example.myapplication.utils.viewBinding
+import com.example.myapplication.utils.dataBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -18,8 +18,8 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
 
-    private val model: MainViewModel by viewModels()
-    private val binding by viewBinding(MainFragmentBinding::bind)
+    private val model: MainViewModel by viewModels({ requireParentFragment() })
+    private val binding: MainFragmentBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +42,7 @@ class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
         binding.pager.isUserInputEnabled = false
         binding.pager.setPageTransformer { page, position ->
             when {
-                position <= -1 -> {  // [-Infinity,-1]
+                position <= -1 -> {  // (-Infinity,-1]
                     // This page is way off-screen to the left.
                     page.translationX = position
                 }
@@ -52,7 +52,7 @@ class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
 //                    page.scaleX = max(MIN_SCALE, 1 - abs(position))
 //                    page.scaleY = max(MIN_SCALE, 1 - abs(position))
                 }
-                else -> {  // [1,+Infinity]
+                else -> {  // [1,+Infinity)
                     // This page is way off-screen to the right.
 //                    page.alpha = 1f
                     page.translationX = position

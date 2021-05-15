@@ -56,28 +56,29 @@ class HistoryViewModel @Inject constructor(
     val msg = _msg.asSharedFlow()
 
     init {
+
         merge(
-            catChecker.asFlow().map { it to SourceType.CAT },
-            dogChecker.asFlow().map { it to SourceType.DOG }
+            catChecker.asFlow().map { SourceType.CAT to it },
+            dogChecker.asFlow().map { SourceType.DOG to it }
         )
             .onEach { changeSourceType(it.first, it.second) }
             .launchIn(viewModelScope)
 
         merge(
-            likedChecker.asFlow().map { it to ImageState.LIKE },
-            dislikedChecker.asFlow().map { it to ImageState.DISLIKE }
+            likedChecker.asFlow().map { ImageState.LIKE to it },
+            dislikedChecker.asFlow().map { ImageState.DISLIKE to it }
         )
             .onEach { changeImageState(it.first, it.second) }
             .launchIn(viewModelScope)
     }
 
-    private fun changeSourceType(checked: Boolean, value: SourceType) {
+    private fun changeSourceType(value: SourceType, checked: Boolean) {
         val collection = filterInfo.value.sourceType
         val newCollection = if (checked) collection + value else collection - value
         filterInfo.value = filterInfo.value.copy(sourceType = newCollection)
     }
 
-    private fun changeImageState(checked: Boolean, value: ImageState) {
+    private fun changeImageState(value: ImageState, checked: Boolean) {
         val collection = filterInfo.value.imageState
         val newCollection = if (checked) collection + value else collection - value
         filterInfo.value = filterInfo.value.copy(imageState = newCollection)

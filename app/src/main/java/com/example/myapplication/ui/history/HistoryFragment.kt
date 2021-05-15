@@ -9,7 +9,7 @@ import com.example.myapplication.databinding.HistoryFragmentBinding
 import com.example.myapplication.model.ImageEntity
 import com.example.myapplication.utils.ImageSavingHelper
 import com.example.myapplication.utils.MainNavigationFragment
-import com.example.myapplication.utils.viewBinding
+import com.example.myapplication.utils.dataBinding
 import com.example.myapplication.utils.viewLifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 class HistoryFragment : MainNavigationFragment(R.layout.history_fragment) {
 
     private val model by viewModels<HistoryViewModel>()
-    private val binding by viewBinding(HistoryFragmentBinding::bind)
+    private val binding by dataBinding<HistoryFragmentBinding>()
 
     private val imageSaver = ImageSavingHelper(this) { model.saveImageToStorage(it) }
 

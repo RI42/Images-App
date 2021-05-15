@@ -7,8 +7,8 @@ object SdkVersion {
 
 
 object BuildPluginsVersion {
-    const val AGP = "4.1.3"
-    const val KOTLIN = "1.4.32"
+    const val AGP = "4.2.1"
+    const val KOTLIN = "1.5.0"
 
     const val NAVIGATION = "2.3.5"
     const val VERSIONS_PLUGIN = "0.38.0"
@@ -21,15 +21,15 @@ object BuildPluginsVersion {
 
 object Versions {
 
-    const val COROUTINES = "1.4.3"
-    const val KOTLINX_SERIALIZATION = "1.1.0"
+    const val COROUTINES = "1.5.0"
+    const val KOTLINX_SERIALIZATION = "1.2.1"
 
     // поменять версию в buildSrc/build.gradle
-    const val HILT = "2.35"
-    const val ANDROIDX_HILT = "1.0.0-beta01"
+    const val HILT = "2.35.1"
+    const val ANDROIDX_HILT = "1.0.0"
 
     const val VECTORDRAWABLE_ANIMATED = "1.1.0"
-    const val MEDIAROUTER = "1.2.2"
+    const val MEDIAROUTER = "1.2.3"
     const val EXIFINTERFACE = "1.3.2"
     const val CONSTRAINTLAYOUT = "2.0.4"
     const val VIEWPAGER2 = "1.0.0"
@@ -53,12 +53,12 @@ object Versions {
     const val ZXING_CORE = "3.3.3"
 
     const val COLLECTION_KTX = "1.1.0"
-    const val APPCOMPAT = "1.3.0-rc01"
-    const val CORE_KTX = "1.5.0-rc01"
+    const val APPCOMPAT = "1.3.0"
+    const val CORE_KTX = "1.5.0"
     const val LIFECYCLE = "2.3.1"
     const val SAVEDSTATE_KTX = "1.1.0"
-    const val ACTIVITY_KTX = "1.2.2"
-    const val FRAGMENT_KTX = "1.3.3"
+    const val ACTIVITY_KTX = "1.2.3"
+    const val FRAGMENT_KTX = "1.3.4"
 
     const val COIL = "1.1.1"
 
@@ -95,7 +95,7 @@ object Versions {
     const val TRUTH_GOOGLE = "1.1.2"
     const val TRUTH_ANDROIDX = "1.3.0"
     const val JUNIT = "4.13.2"
-    const val MOCKITO = "3.9.0"
+    const val MOCKITO = "3.10.0"
     const val MOCKITO_KOTLIN = "2.2.0"
     const val TEST_CORE = "1.3.0"
     const val ARCH_CORE_TESTING = "2.1.0"

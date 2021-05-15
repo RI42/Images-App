@@ -47,6 +47,6 @@ class ImageRepositoryImpl @Inject constructor(
     ): Flow<PagingData<ImageEntity>> = Pager(
         config = PagingConfig(pageSize = pageSize, enablePlaceholders = true),
     ) {
-        db.imageDao().getFiltered(info.sourceType, info.imageState)
+        db.imageDao().getFiltered(info)
     }.flow
 }

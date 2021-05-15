@@ -17,8 +17,8 @@ import com.example.myapplication.databinding.PagerFragmentBinding
 import com.example.myapplication.model.ImageEntity
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
 import com.example.myapplication.utils.ImageSavingHelper
+import com.example.myapplication.utils.dataBinding
 import com.example.myapplication.utils.rvUtils.StackLayoutManager
-import com.example.myapplication.utils.viewBinding
 import com.example.myapplication.utils.viewLifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +46,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
     private val pageInfo by lazy { requireArguments().getParcelable<PageInfo>(PAGE_INFO)!! }
     private val model: PagerViewModel by viewModels()
-    private val binding by viewBinding(PagerFragmentBinding::bind)
+    private val binding: PagerFragmentBinding by dataBinding()
 
 
     @SuppressLint("ClickableViewAccessibility")

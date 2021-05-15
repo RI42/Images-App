@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
+import com.example.myapplication.model.FilterInfo
 import com.example.myapplication.model.ImageEntity
 import com.example.myapplication.model.ImageState
 import com.example.myapplication.model.SourceType
@@ -31,7 +32,8 @@ abstract class ImageDao : BaseDao<ImageEntity>() {
         SELECT * FROM image_data 
         WHERE state NOT IN (:exclude) 
             AND (:sourceTypeSize = 0 OR sourceType IN (:sourceType)) 
-            AND (:stateSize = 0 OR state IN (:state))"""
+            AND (:stateSize = 0 OR state IN (:state))
+            """
     )
     abstract fun getFiltered(
         sourceType: Set<SourceType>,
@@ -40,4 +42,11 @@ abstract class ImageDao : BaseDao<ImageEntity>() {
         stateSize: Int = state.size,
         exclude: Set<ImageState> = setOf(ImageState.NOT_SHOWN)
     ): PagingSource<Int, ImageEntity>
+
+    fun getFiltered(
+        info: FilterInfo
+    ): PagingSource<Int, ImageEntity> = getFiltered(
+        info.sourceType,
+        info.imageState,
+    )
 }

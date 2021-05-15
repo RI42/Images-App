@@ -1,6 +1,10 @@
 package com.example.myapplication.utils
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Transaction
+import androidx.room.Update
 
 @Dao
 abstract class BaseDao<T> {

@@ -30,15 +30,13 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            useIR = true
             jvmTarget = "1.8"
             freeCompilerArgs = listOf(
                 "-Xuse-experimental=" +
                         "kotlin.Experimental," +
                         "kotlinx.coroutines.ExperimentalCoroutinesApi," +
                         "kotlinx.coroutines.InternalCoroutinesApi," +
-                        "kotlinx.coroutines.FlowPreview",
-                "-Xallow-result-return-type"
+                        "kotlinx.coroutines.FlowPreview"
             )
         }
     }

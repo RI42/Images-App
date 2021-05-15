@@ -12,6 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@tools:sample/avatars" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
@@ -23,23 +33,10 @@
                 android:id="@+id/toolbar"
                 style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
-                android:minHeight="?attr/actionBarSize"
                 app:menu="@menu/history_fragment_menu"
                 app:title="History" />
-
         </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:listitem="@tools:sample/avatars" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
