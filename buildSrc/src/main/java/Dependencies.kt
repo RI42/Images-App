@@ -55,6 +55,7 @@ object Deps {
     const val COIL_GIF = "io.coil-kt:coil-gif:${Versions.COIL}"
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
+    const val KOTLINX_SERIALIZATION_CONVERTER = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.KOTLINX_SERIALIZATION_CONVERTER}"
     const val CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"

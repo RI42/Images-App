@@ -11,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(SdkVersion.COMPILE_SDK_VERSION)
-    buildToolsVersion(SdkVersion.BUILD_TOOLS_VERSION)
+    compileSdk = SdkVersion.COMPILE_SDK_VERSION
+    buildToolsVersion = SdkVersion.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion(SdkVersion.MIN_SDK_VERSION)
-        targetSdkVersion(SdkVersion.TARGET_SDK_VERSION)
+        minSdk = SdkVersion.MIN_SDK_VERSION
+        targetSdk = SdkVersion.TARGET_SDK_VERSION
 
         applicationId = AppCoordinates.APP_ID
         versionCode = AppCoordinates.APP_VERSION_CODE
@@ -25,13 +25,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
-        resConfigs("en")
+        resourceConfigurations.add("en")
     }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -84,7 +84,7 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.1")
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
@@ -118,7 +118,7 @@ dependencies {
     implementation(Deps.SWIPEREFRESHLAYOUT)
 
     implementation(Deps.RETROFIT)
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation(Deps.KOTLINX_SERIALIZATION_CONVERTER)
     implementation(Deps.LOGGING_INTERCEPTOR)
 
 //    implementation(Deps.EXOPLAYER)
@@ -140,6 +140,9 @@ dependencies {
     coreLibraryDesugaring(Deps.DESUGAR_JDK_LIBS)
 
     // TEST
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_VERSION}")
+    debugImplementation ("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
+
     testImplementation(TestDeps.JUNIT)
     testImplementation(TestDeps.ARCH_CORE_TESTING)
     testImplementation(TestDeps.KOTLINX_COROUTINES_TEST)

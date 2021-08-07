@@ -7,11 +7,11 @@ object SdkVersion {
 
 
 object BuildPluginsVersion {
-    const val AGP = "4.2.1"
-    const val KOTLIN = "1.5.0"
+    const val AGP = "7.0.0"
+    const val KOTLIN = "1.5.21"
 
     const val NAVIGATION = "2.3.5"
-    const val VERSIONS_PLUGIN = "0.38.0"
+    const val VERSIONS_PLUGIN = "0.39.0"
     const val GOOGLE_SERVICES = "4.3.5"
     const val FIREBASE_CRASHLYTICS_GRADLE = "2.4.1"
 
@@ -21,22 +21,22 @@ object BuildPluginsVersion {
 
 object Versions {
 
-    const val COROUTINES = "1.5.0"
-    const val KOTLINX_SERIALIZATION = "1.2.1"
+    const val COROUTINES = "1.5.1"
+    const val KOTLINX_SERIALIZATION = "1.2.2"
 
     // поменять версию в buildSrc/build.gradle
-    const val HILT = "2.35.1"
+    const val HILT = "2.38.1"
     const val ANDROIDX_HILT = "1.0.0"
 
     const val VECTORDRAWABLE_ANIMATED = "1.1.0"
-    const val MEDIAROUTER = "1.2.3"
-    const val EXIFINTERFACE = "1.3.2"
-    const val CONSTRAINTLAYOUT = "2.0.4"
+    const val MEDIAROUTER = "1.2.4"
+    const val EXIFINTERFACE = "1.3.3"
+    const val CONSTRAINTLAYOUT = "2.1.0"
     const val VIEWPAGER2 = "1.0.0"
     const val CARDVIEW = "1.0.0"
     const val BROWSER = "1.3.0"
-    const val MATERIAL = "1.3.0"
-    const val RECYCLERVIEW = "1.2.0"
+    const val MATERIAL = "1.4.0"
+    const val RECYCLERVIEW = "1.2.1"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
     const val ROOM = "2.3.0"
     const val DATASTORE = "1.0.0-alpha02"
@@ -53,12 +53,12 @@ object Versions {
     const val ZXING_CORE = "3.3.3"
 
     const val COLLECTION_KTX = "1.1.0"
-    const val APPCOMPAT = "1.3.0"
-    const val CORE_KTX = "1.5.0"
+    const val APPCOMPAT = "1.3.1"
+    const val CORE_KTX = "1.6.0"
     const val LIFECYCLE = "2.3.1"
     const val SAVEDSTATE_KTX = "1.1.0"
-    const val ACTIVITY_KTX = "1.2.3"
-    const val FRAGMENT_KTX = "1.3.4"
+    const val ACTIVITY_KTX = "1.3.1"
+    const val FRAGMENT_KTX = "1.3.6"
 
     const val COIL = "1.1.1"
 
@@ -70,6 +70,7 @@ object Versions {
     const val FAST_ADAPTER = "4.1.0"
 
     const val RETROFIT = "2.9.0"
+    const val KOTLINX_SERIALIZATION_CONVERTER = "0.8.0"
     const val GSON = "2.8.6"
     const val LOGGING_INTERCEPTOR = "4.9.1"
 
@@ -90,18 +91,19 @@ object Versions {
 
     const val FIREBASE_BOM = "26.5.0"
 
-    const val INSETTER = "0.5.0"
+    const val INSETTER = "0.6.0"
+    const val COMPOSE_VERSION = "1.0.1"
 
-    const val TRUTH_GOOGLE = "1.1.2"
+    const val TRUTH_GOOGLE = "1.1.3"
     const val TRUTH_ANDROIDX = "1.3.0"
     const val JUNIT = "4.13.2"
-    const val MOCKITO = "3.10.0"
+    const val MOCKITO = "3.11.2"
     const val MOCKITO_KOTLIN = "2.2.0"
-    const val TEST_CORE = "1.3.0"
+    const val TEST_CORE = "1.4.0"
     const val ARCH_CORE_TESTING = "2.1.0"
-    const val ROBOLECTRIC = "4.5.1"
-    const val TEST_RUNNER = "1.3.0"
-    const val ESPRESSO_CORE = "3.3.0"
-    const val EXT_JUNIT = "1.1.2"
+    const val ROBOLECTRIC = "4.6.1"
+    const val TEST_RUNNER = "1.4.0"
+    const val ESPRESSO_CORE = "3.4.0"
+    const val EXT_JUNIT = "1.1.3"
     const val LEAKCANARY = "2.3"
 }
