@@ -7,8 +7,8 @@ object SdkVersion {
 
 
 object BuildPluginsVersion {
-    const val AGP = "4.2.1"
-    const val KOTLIN = "1.5.0"
+    const val AGP = "4.2.2"
+    const val KOTLIN = "1.5.21"
 
     const val NAVIGATION = "2.3.5"
     const val VERSIONS_PLUGIN = "0.38.0"
@@ -24,7 +24,6 @@ object Versions {
     const val COROUTINES = "1.5.0"
     const val KOTLINX_SERIALIZATION = "1.2.1"
 
-    // поменять версию в buildSrc/build.gradle
     const val HILT = "2.35.1"
     const val ANDROIDX_HILT = "1.0.0"
 

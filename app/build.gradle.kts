@@ -175,7 +175,3 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
-
-hilt {
-    enableTransformForLocalTests = true
-}
