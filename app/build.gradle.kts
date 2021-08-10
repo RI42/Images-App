@@ -39,6 +39,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -136,6 +137,13 @@ dependencies {
     implementation(Deps.ROOM_KTX)
     implementation(Deps.ROOM_RUNTIME)
     kapt(Deps.ROOM_COMPILER)
+    
+    implementation ("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
+    implementation ("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
+    implementation("androidx.compose.material:material-icons-core:${Versions.COMPOSE_VERSION}")
+    implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE_VERSION}")
+    implementation ("androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE_VERSION}")
+    implementation("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
 
     coreLibraryDesugaring(Deps.DESUGAR_JDK_LIBS)
 
