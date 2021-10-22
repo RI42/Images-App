@@ -1,17 +1,17 @@
 package com.example.myapplication.data
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.myapplication.db.AppDatabase
+import androidx.paging.*
+import com.example.myapplication.consts.Consts
+import com.example.myapplication.data.db.AppDatabase
+import com.example.myapplication.data.db.model.toEntity
+import com.example.myapplication.data.db.model.toModel
 import com.example.myapplication.domain.ImageRepository
-import com.example.myapplication.domain.ImageSourceProvider
-import com.example.myapplication.model.FilterInfo
-import com.example.myapplication.model.ImageEntity
-import com.example.myapplication.model.ImageState
-import com.example.myapplication.model.SourceType
+import com.example.myapplication.domain.model.FilterInfo
+import com.example.myapplication.domain.model.Image
+import com.example.myapplication.domain.model.ImageState
+import com.example.myapplication.domain.model.SourceType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,31 +22,23 @@ class ImageRepositoryImpl @Inject constructor(
     private val imageSourceProvider: ImageSourceProvider,
 ) : ImageRepository {
 
-    override fun getImagesPagingFlow(
-        pageSize: Int,
-        sourceType: SourceType
-    ): Flow<PagingData<ImageEntity>> =
+    override fun getImagesPagingFlow(sourceType: SourceType): Flow<PagingData<Image>> =
         Pager(
-            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            config = PagingConfig(pageSize = Consts.PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = PageKeyedRemoteMediator(
-                db,
-                imageSourceProvider[sourceType],
-                sourceType
+                db = db,
+                theApi = imageSourceProvider[sourceType],
+                sourceType = sourceType
             )
-        ) {
-            db.imageDao().getNotShownImages(sourceType)
-        }.flow
+        ) { db.imageDao().getNotShownImages(sourceType) }
+            .flow.map { paging -> paging.map { it.toModel() } }
 
-    override suspend fun setState(image: ImageEntity, state: ImageState) {
-        db.imageDao().updateImage(image.copy(state = state))
+    override suspend fun setState(image: Image, state: ImageState) {
+        db.imageDao().updateImage(image.copy(state = state).toEntity())
     }
 
-    override fun filteredImagesFlow(
-        pageSize: Int,
-        info: FilterInfo
-    ): Flow<PagingData<ImageEntity>> = Pager(
-        config = PagingConfig(pageSize = pageSize, enablePlaceholders = true),
-    ) {
-        db.imageDao().getFiltered(info)
-    }.flow
+    override fun filteredImagesFlow(info: FilterInfo): Flow<PagingData<Image>> = Pager(
+        config = PagingConfig(pageSize = Consts.PAGE_SIZE, enablePlaceholders = true),
+    ) { db.imageDao().getFiltered(info) }
+        .flow.map { paging -> paging.map { it.toModel() } }
 }

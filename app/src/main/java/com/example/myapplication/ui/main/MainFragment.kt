@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.MainFragmentBinding
 import com.example.myapplication.ui.pager.PagerAdapter
-import com.example.myapplication.utils.MainNavigationFragment
-import com.example.myapplication.utils.dataBinding
+import com.example.myapplication.ui.utils.MainNavigationFragment
+import com.example.myapplication.ui.utils.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -18,8 +18,8 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class MainFragment : MainNavigationFragment(R.layout.main_fragment) {
 
-    private val model: MainViewModel by viewModels({ requireParentFragment() })
-    private val binding: MainFragmentBinding by dataBinding()
+    private val model: MainViewModel by viewModels()
+    private val binding by viewBinding(MainFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

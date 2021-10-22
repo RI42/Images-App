@@ -6,11 +6,11 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.consts.Consts
 import com.example.myapplication.data.ImageRepositoryImpl
 import com.example.myapplication.data.ImageSourceProviderImpl
-import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.domain.ImageRepository
-import com.example.myapplication.domain.ImageSourceProvider
-import com.example.myapplication.model.SourceType
-import com.example.myapplication.network.TheApi
+import com.example.myapplication.data.ImageSourceProvider
+import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.data.network.TheApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module
@@ -31,64 +31,71 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CoreModule {
+interface CoreModule {
 
-    @Provides
-    @Singleton
-    fun provideAppDb(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.createDatabase(context)
-    }
+    @Binds
+    fun ImageSourceProviderImpl.bindsImageSourceProvider(): ImageSourceProvider
 
-    @Provides
-    @Singleton
-    @IntoMap
-    @SourceTypeKey(SourceType.CAT)
-    fun provideCatService(
-        client: OkHttpClient,
-        jsonConverterFactory: Converter.Factory
-    ): TheApi {
-        return createApi(Consts.THE_CAT_BASE_URL, client, jsonConverterFactory)
-    }
+    @ExperimentalPagingApi
+    @Binds
+    fun ImageRepositoryImpl.bindsImageRepository(): ImageRepository
 
-    @Provides
-    @Singleton
-    @IntoMap
-    @SourceTypeKey(SourceType.DOG)
-    fun provideDogService(
-        client: OkHttpClient,
-        jsonConverterFactory: Converter.Factory
-    ): TheApi {
-        return createApi(Consts.THE_DOG_BASE_URL, client, jsonConverterFactory)
-    }
+    companion object {
 
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BASIC
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
+        @Provides
+        @Singleton
+        fun provideAppDb(@ApplicationContext context: Context): AppDatabase {
+            return AppDatabase.createDatabase(context)
         }
-        val timeout = 30L
-        return OkHttpClient.Builder()
-            .connectTimeout(timeout, TimeUnit.SECONDS)
-            .writeTimeout(timeout, TimeUnit.SECONDS)
-            .readTimeout(timeout, TimeUnit.SECONDS)
-            .addInterceptor(interceptor)
-            .build()
+
+        @Provides
+        @Singleton
+        @IntoMap
+        @SourceTypeKey(SourceType.CAT)
+        fun provideCatService(
+            client: OkHttpClient,
+            jsonConverterFactory: Converter.Factory
+        ): TheApi = createApi(Consts.THE_CAT_BASE_URL, client, jsonConverterFactory)
+
+        @Provides
+        @Singleton
+        @IntoMap
+        @SourceTypeKey(SourceType.DOG)
+        fun provideDogService(
+            client: OkHttpClient,
+            jsonConverterFactory: Converter.Factory
+        ): TheApi = createApi(Consts.THE_DOG_BASE_URL, client, jsonConverterFactory)
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(): OkHttpClient {
+            val interceptor = HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BASIC
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
+            }
+            val timeout = 30L
+            return OkHttpClient.Builder()
+                .connectTimeout(timeout, TimeUnit.SECONDS)
+                .writeTimeout(timeout, TimeUnit.SECONDS)
+                .readTimeout(timeout, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .build()
+        }
+
+        @Provides
+        @Singleton
+        fun provideJson(): Json = Json { ignoreUnknownKeys = true }
+
+        @ExperimentalSerializationApi
+        @Provides
+        @Singleton
+        fun provideJsonConverterFactory(json: Json): Converter.Factory =
+            json.asConverterFactory("application/json".toMediaType())
+
     }
-
-    @Provides
-    @Singleton
-    fun provideJson(): Json = Json { ignoreUnknownKeys = true }
-
-    @ExperimentalSerializationApi
-    @Provides
-    @Singleton
-    fun provideJsonConverterFactory(json: Json): Converter.Factory =
-        json.asConverterFactory("application/json".toMediaType())
 }
 
 private fun createApi(
@@ -101,15 +108,3 @@ private fun createApi(
     .addConverterFactory(jsonConverterFactory)
     .build()
     .create(TheApi::class.java)
-
-@Module
-@InstallIn(SingletonComponent::class)
-interface BindsModule {
-
-    @Binds
-    fun bindsImageSourceProvider(imageSourceProviderImpl: ImageSourceProviderImpl): ImageSourceProvider
-
-    @ExperimentalPagingApi
-    @Binds
-    fun bindsImageRepository(imageRepositoryImpl: ImageRepositoryImpl): ImageRepository
-}

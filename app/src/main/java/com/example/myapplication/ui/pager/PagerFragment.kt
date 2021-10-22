@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.PagerFragmentBinding
-import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.domain.model.Image
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
-import com.example.myapplication.utils.ImageSavingHelper
-import com.example.myapplication.utils.dataBinding
-import com.example.myapplication.utils.rvUtils.StackLayoutManager
-import com.example.myapplication.utils.viewLifecycleScope
+import com.example.myapplication.ui.utils.ImageSavingHelper
+import com.example.myapplication.ui.utils.viewBinding
+import com.example.myapplication.ui.utils.rvUtils.StackLayoutManager
+import com.example.myapplication.ui.utils.viewLifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -46,7 +46,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
     private val pageInfo by lazy { requireArguments().getParcelable<PageInfo>(PAGE_INFO)!! }
     private val model: PagerViewModel by viewModels()
-    private val binding: PagerFragmentBinding by dataBinding()
+    private val binding by viewBinding(PagerFragmentBinding::bind)
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -134,7 +134,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
         }
     }
 
-    private fun saveImage(view: View, image: ImageEntity) {
+    private fun saveImage(view: View, image: Image) {
         imageSaver.saveImage(image)
     }
 

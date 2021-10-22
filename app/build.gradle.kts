@@ -38,7 +38,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -70,9 +70,6 @@ dependencies {
     implementation(Deps.KOTLINX_COROUTINES_CORE)
     implementation(Deps.KOTLINX_COROUTINES_ANDROID)
 
-//    implementation(Deps.COIL)
-//    implementation(Deps.COIL_GIF)
-
     implementation(Deps.APPCOMPAT)
     implementation(Deps.VECTORDRAWABLE_ANIMATED)
     implementation(Deps.MEDIAROUTER)
@@ -84,8 +81,8 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.RECYCLERVIEW)
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.1")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation(Deps.PAGING)
+    implementation(Deps.GLIDE)
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
 
@@ -109,9 +106,6 @@ dependencies {
 
     implementation(Deps.HILT_ANDROID)
     kapt(Deps.HILT_COMPILER)
-//    implementation(Deps.HILT_LIFECYCLE_VIEWMODEL)
-//    implementation(Deps.HILT_NAVIGATION_FRAGMENT)
-//    kapt(Deps.HILT_ANDROIDX_COMPILER)
 
     implementation(Deps.TIMBER)
 
@@ -121,27 +115,11 @@ dependencies {
     implementation(Deps.KOTLINX_SERIALIZATION_CONVERTER)
     implementation(Deps.LOGGING_INTERCEPTOR)
 
-//    implementation(Deps.EXOPLAYER)
-//    implementation(Deps.EXTENSION_MEDIASESSION)
-
-//    implementation(Deps.PLAY_SERVICES_BASE)
-//    implementation(Deps.PLAY_SERVICES_AUTH)
-//    implementation(Deps.PLAY_SERVICES_LOCATION)
-//    implementation(Deps.PLAY_SERVICES_MAPS)
-//    implementation(Deps.MAPS_UTILS)
-//    implementation(Deps.MAPS_KTX)
-//    implementation(Deps.MAPS_UTILS_KTX)
-//    implementation(Deps.COROUTINES_PLAY_SERVICES)
-
     implementation(Deps.ROOM_KTX)
     implementation(Deps.ROOM_RUNTIME)
     kapt(Deps.ROOM_COMPILER)
 
     coreLibraryDesugaring(Deps.DESUGAR_JDK_LIBS)
-
-    // TEST
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_VERSION}")
-    debugImplementation ("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
 
     testImplementation(TestDeps.JUNIT)
     testImplementation(TestDeps.ARCH_CORE_TESTING)
@@ -154,12 +132,8 @@ dependencies {
     testImplementation(TestDeps.ROOM_TESTING)
     testImplementation(AndroidTestDeps.JUNIT)
 
-
-//    testImplementation("org.hamcrest:hamcrest-all:1.3")
-//    testImplementation("androidx.test.ext:truth:${Versions.TRUTH_ANDROIDX}")
     testImplementation("com.google.truth:truth:${Versions.TRUTH_GOOGLE}")
 
-//    androidTestImplementation("androidx.test.ext:truth:${Versions.TRUTH_ANDROIDX}")
     androidTestImplementation("com.google.truth:truth:${Versions.TRUTH_GOOGLE}")
 
     androidTestImplementation(AndroidTestDeps.FRAGMENT_TESTING)

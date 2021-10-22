@@ -1,15 +1,15 @@
 package com.example.myapplication.domain
 
 import androidx.paging.PagingData
-import com.example.myapplication.model.FilterInfo
-import com.example.myapplication.model.ImageEntity
-import com.example.myapplication.model.ImageState
-import com.example.myapplication.model.SourceType
+import com.example.myapplication.domain.model.FilterInfo
+import com.example.myapplication.domain.model.Image
+import com.example.myapplication.domain.model.ImageState
+import com.example.myapplication.domain.model.SourceType
 import kotlinx.coroutines.flow.Flow
 
 interface ImageRepository {
-    fun getImagesPagingFlow(pageSize: Int, sourceType: SourceType): Flow<PagingData<ImageEntity>>
-    suspend fun setState(image: ImageEntity, state: ImageState)
+    fun getImagesPagingFlow(sourceType: SourceType): Flow<PagingData<Image>>
+    suspend fun setState(image: Image, state: ImageState)
 
-    fun filteredImagesFlow(pageSize: Int, info: FilterInfo): Flow<PagingData<ImageEntity>>
+    fun filteredImagesFlow(info: FilterInfo): Flow<PagingData<Image>>
 }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.HistoryRvItemBinding
-import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.domain.model.Image
 import timber.log.Timber
 
 class HistoryImageAdapter(
     val context: Context
-) : PagingDataAdapter<ImageEntity, HistoryImageAdapter.ImageViewHolder>(DiffCallback) {
+) : PagingDataAdapter<Image, HistoryImageAdapter.ImageViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val binding =
@@ -34,7 +34,7 @@ class HistoryImageAdapter(
     inner class ImageViewHolder(private val binding: HistoryRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(image: ImageEntity) {
+        fun bind(image: Image) {
 
             Glide.with(context)
                 .load(image.url)
@@ -44,12 +44,12 @@ class HistoryImageAdapter(
     }
 }
 
-private object DiffCallback : DiffUtil.ItemCallback<ImageEntity>() {
-    override fun areItemsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean {
+private object DiffCallback : DiffUtil.ItemCallback<Image>() {
+    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean {
+    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem == newItem
     }
 }

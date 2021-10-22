@@ -8,7 +8,7 @@ import com.example.myapplication.domain.usecase.FetchImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
 import com.example.myapplication.domain.usecase.SetDislikeUseCase
 import com.example.myapplication.domain.usecase.SetLikeUseCase
-import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.domain.model.Image
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,19 +45,19 @@ class PagerViewModel @Inject constructor(
         Timber.d("PagerViewModel $pagerInfo")
     }
 
-    fun setLike(item: ImageEntity) {
+    fun setLike(item: Image) {
         viewModelScope.launch {
             setLikeUseCase(item)
         }
     }
 
-    fun setDislike(item: ImageEntity) {
+    fun setDislike(item: Image) {
         viewModelScope.launch {
             setDislikeUseCase(item)
         }
     }
 
-    fun saveImageToStorage(image: ImageEntity) {
+    fun saveImageToStorage(image: Image) {
         isLoading.value = true
         viewModelScope.launch {
             val minTime = 1000

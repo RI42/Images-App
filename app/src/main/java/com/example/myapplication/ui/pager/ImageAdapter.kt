@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.RvItemBinding
-import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.domain.model.Image
 import timber.log.Timber
 
 class ImageAdapter(
     val context: Context
-) : PagingDataAdapter<ImageEntity, ImageAdapter.ImageViewHolder>(DiffCallback) {
+) : PagingDataAdapter<Image, ImageAdapter.ImageViewHolder>(DiffCallback) {
 
     private var currentSize = 0
     private val maxPreloadSize = 10
@@ -39,7 +39,7 @@ class ImageAdapter(
         }
     }
 
-    private fun preloadImage(image: ImageEntity) {
+    private fun preloadImage(image: Image) {
         Glide.with(context)
             .load(image.url)
             .preload(image.width, image.height)
@@ -63,7 +63,7 @@ class ImageAdapter(
     inner class ImageViewHolder(private val binding: RvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(image: ImageEntity) {
+        fun bind(image: Image) {
 
             Glide.with(context)
                 .load(image.url)
@@ -73,12 +73,12 @@ class ImageAdapter(
     }
 }
 
-private object DiffCallback : DiffUtil.ItemCallback<ImageEntity>() {
-    override fun areItemsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean {
+private object DiffCallback : DiffUtil.ItemCallback<Image>() {
+    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean {
+    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem == newItem
     }
 }

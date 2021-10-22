@@ -11,8 +11,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.MainActivityBinding
-import com.example.myapplication.utils.MainNavigationFragment
-import com.example.myapplication.utils.NavigationHost
+import com.example.myapplication.ui.utils.MainNavigationFragment
+import com.example.myapplication.ui.utils.NavigationHost
 
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter

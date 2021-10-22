@@ -6,11 +6,11 @@ import androidx.fragment.app.viewModels
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FilterDialogBinding
 import com.example.myapplication.databinding.HistoryFragmentBinding
-import com.example.myapplication.model.ImageEntity
-import com.example.myapplication.utils.ImageSavingHelper
-import com.example.myapplication.utils.MainNavigationFragment
-import com.example.myapplication.utils.dataBinding
-import com.example.myapplication.utils.viewLifecycleScope
+import com.example.myapplication.domain.model.Image
+import com.example.myapplication.ui.utils.ImageSavingHelper
+import com.example.myapplication.ui.utils.MainNavigationFragment
+import com.example.myapplication.ui.utils.viewBinding
+import com.example.myapplication.ui.utils.viewLifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -19,8 +19,8 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class HistoryFragment : MainNavigationFragment(R.layout.history_fragment) {
 
-    private val model by viewModels<HistoryViewModel>()
-    private val binding by dataBinding<HistoryFragmentBinding>()
+    private val model: HistoryViewModel by viewModels()
+    private val binding by viewBinding(HistoryFragmentBinding::bind)
 
     private val imageSaver = ImageSavingHelper(this) { model.saveImageToStorage(it) }
 
@@ -39,7 +39,22 @@ class HistoryFragment : MainNavigationFragment(R.layout.history_fragment) {
             when (it.itemId) {
                 R.id.filter -> {
                     val filterBinding = FilterDialogBinding.inflate(layoutInflater).apply {
-                        viewModel = model
+                        cats.isChecked = model.catChecker.value ?: false
+                        dogs.isChecked = model.dogChecker.value ?: false
+                        liked.isChecked = model.likedChecker.value ?: false
+                        disliked.isChecked = model.dislikedChecker.value ?: false
+                        cats.setOnCheckedChangeListener { _, isChecked ->
+                            model.catChecker.value = isChecked
+                        }
+                        dogs.setOnCheckedChangeListener { _, isChecked ->
+                            model.dogChecker.value = isChecked
+                        }
+                        liked.setOnCheckedChangeListener { _, isChecked ->
+                            model.likedChecker.value = isChecked
+                        }
+                        disliked.setOnCheckedChangeListener { _, isChecked ->
+                            model.dislikedChecker.value = isChecked
+                        }
                     }
 
                     MaterialAlertDialogBuilder(requireContext())
@@ -65,7 +80,7 @@ class HistoryFragment : MainNavigationFragment(R.layout.history_fragment) {
         }
     }
 
-    private fun saveImage(view: View, image: ImageEntity) {
+    private fun saveImage(view: View, image: Image) {
         imageSaver.saveImage(image)
     }
 }

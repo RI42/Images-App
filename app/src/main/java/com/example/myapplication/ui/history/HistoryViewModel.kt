@@ -1,19 +1,14 @@
 package com.example.myapplication.ui.history
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
+import com.example.myapplication.domain.model.Image
+import com.example.myapplication.domain.model.FilterInfo
+import com.example.myapplication.domain.model.ImageState
+import com.example.myapplication.domain.model.SourceType
 import com.example.myapplication.domain.usecase.FilteredImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
-import com.example.myapplication.model.FilterInfo
-import com.example.myapplication.model.ImageEntity
-import com.example.myapplication.model.ImageState
-import com.example.myapplication.model.SourceType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -25,6 +20,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
@@ -32,10 +28,6 @@ class HistoryViewModel @Inject constructor(
     private val saveImageToStorageUseCase: SaveImageToStorageUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    companion object {
-        private const val MIN_PROGRESS_TIME_MS = 1000
-    }
 
     private val filterInfo = MutableStateFlow(
         savedStateHandle["filterInfo"] ?: FilterInfo(setOf(), setOf())
@@ -61,33 +53,36 @@ class HistoryViewModel @Inject constructor(
             catChecker.asFlow().map { SourceType.CAT to it },
             dogChecker.asFlow().map { SourceType.DOG to it }
         )
-            .onEach { changeSourceType(it.first, it.second) }
+            .onEach { changeFilter(it) }
             .launchIn(viewModelScope)
 
         merge(
             likedChecker.asFlow().map { ImageState.LIKE to it },
             dislikedChecker.asFlow().map { ImageState.DISLIKE to it }
         )
-            .onEach { changeImageState(it.first, it.second) }
+            .onEach { changeFilter(it) }
             .launchIn(viewModelScope)
     }
 
-    private fun changeSourceType(value: SourceType, checked: Boolean) {
+    @JvmName("changeFilterSourceType")
+    private fun changeFilter(entry: Pair<SourceType, Boolean>) {
+        val (value, checked) = entry
         val collection = filterInfo.value.sourceType
         val newCollection = if (checked) collection + value else collection - value
         filterInfo.value = filterInfo.value.copy(sourceType = newCollection)
     }
 
-    private fun changeImageState(value: ImageState, checked: Boolean) {
+    @JvmName("changeFilterImageState")
+    private fun changeFilter(entry: Pair<ImageState, Boolean>) {
+        val (value, checked) = entry
         val collection = filterInfo.value.imageState
         val newCollection = if (checked) collection + value else collection - value
         filterInfo.value = filterInfo.value.copy(imageState = newCollection)
     }
 
-    fun saveImageToStorage(image: ImageEntity) {
+    fun saveImageToStorage(image: Image) {
         isLoading.value = true
         viewModelScope.launch {
-            val start = System.currentTimeMillis()
             try {
                 saveImageToStorageUseCase(image)
                 _msg.emit("Saved to Gallery")
@@ -95,10 +90,6 @@ class HistoryViewModel @Inject constructor(
                 _msg.emit("Failed to save image")
                 Timber.d(e)
             } finally {
-                val end = System.currentTimeMillis()
-                if (end - start < MIN_PROGRESS_TIME_MS) {
-                    delay(MIN_PROGRESS_TIME_MS - (end - start))
-                }
                 isLoading.value = false
             }
         }

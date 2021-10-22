@@ -53,6 +53,7 @@ object Deps {
 
     const val COIL = "io.coil-kt:coil:${Versions.COIL}"
     const val COIL_GIF = "io.coil-kt:coil-gif:${Versions.COIL}"
+    const val GLIDE = "com.github.bumptech.glide:glide:4.12.0"
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val KOTLINX_SERIALIZATION_CONVERTER = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.KOTLINX_SERIALIZATION_CONVERTER}"
@@ -109,6 +110,7 @@ object Deps {
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+    const val PAGING = "androidx.paging:paging-runtime-ktx:${Versions.PAGING}"
 
     const val DATASTORE_PREFERENCES = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
     const val DATASTORE_CORE = "androidx.datastore:datastore-core:${Versions.DATASTORE}"
@@ -174,24 +176,17 @@ fun DependencyHandlerScope.commonDependencies() {
     implementation(Deps.NAVIGATION_FRAGMENT_KTX)
     implementation(Deps.NAVIGATION_UI_KTX)
 
-    implementation(Deps.COIL)
-
     implementation(Deps.RETROFIT)
-    implementation(Deps.CONVERTER_GSON)
-    implementation(Deps.GSON)
     implementation(Deps.KOTLINX_SERIALIZATION_JSON)
 
     implementation(Deps.HILT_ANDROID)
     kapt(Deps.HILT_COMPILER)
-//    implementation(Deps.HILT_LIFECYCLE_VIEWMODEL)
-//    kapt(Deps.HILT_ANDROIDX_COMPILER)
 
     implementation(Deps.TIMBER)
 
     implementation(platform(Deps.FIREBASE_BOM))
     implementation(Deps.FIREBASE_CRASHLYTICS)
     implementation(Deps.FIREBASE_ANALYTICS)
-
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${BuildPluginsVersion.DETEKT}")
 

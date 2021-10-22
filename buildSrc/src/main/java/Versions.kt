@@ -24,7 +24,6 @@ object Versions {
     const val COROUTINES = "1.5.1"
     const val KOTLINX_SERIALIZATION = "1.2.2"
 
-    // поменять версию в buildSrc/build.gradle
     const val HILT = "2.38.1"
     const val ANDROIDX_HILT = "1.0.0"
 
@@ -39,6 +38,7 @@ object Versions {
     const val RECYCLERVIEW = "1.2.1"
     const val SWIPEREFRESHLAYOUT = "1.1.0"
     const val ROOM = "2.3.0"
+    const val PAGING = "3.0.1"
     const val DATASTORE = "1.0.0-alpha02"
 
     const val STFALCON = "1.0.10"

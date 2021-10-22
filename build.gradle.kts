@@ -1,9 +1,4 @@
-//import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-//plugins {
-//    id("com.github.ben-manes.versions") version BuildPluginsVersion.VERSIONS_PLUGIN
-//}
 
 buildscript {
     repositories {
@@ -47,12 +42,3 @@ allprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
-
-//fun isNonStable(version: String) = "^[0-9,.v-]+(-r)?$".toRegex().matches(version).not()
-//
-//tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
-//    rejectVersionIf {
-//        isNonStable(candidate.version) && !isNonStable(currentVersion)
-//    }
-//    checkForGradleUpdate = true
-//}

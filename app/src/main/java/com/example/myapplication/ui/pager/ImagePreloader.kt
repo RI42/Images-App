@@ -3,13 +3,13 @@ package com.example.myapplication.ui.pager
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myapplication.model.ImageEntity
+import com.example.myapplication.domain.model.Image
 
 class ImagePreloader(
     val context: Context,
     val adapter: RecyclerView.Adapter<*>,
     val preloadSize: Int,
-    val getItem: (Int) -> ImageEntity?
+    val getItem: (Int) -> Image?
 ) {
 
     private var currentSize = 0
@@ -41,7 +41,7 @@ class ImagePreloader(
         }
     }
 
-    private fun preloadImage(image: ImageEntity) {
+    private fun preloadImage(image: Image) {
         Glide.with(context)
             .load(image.url)
             .preload(image.width, image.height)
