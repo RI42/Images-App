@@ -1,13 +1,13 @@
 object SdkVersion {
     const val MIN_SDK_VERSION = 23
-    const val TARGET_SDK_VERSION = 30
-    const val COMPILE_SDK_VERSION = 30
-    const val BUILD_TOOLS_VERSION = "30.0.3"
+    const val TARGET_SDK_VERSION = 31
+    const val COMPILE_SDK_VERSION = 31
+    const val BUILD_TOOLS_VERSION = "31.0.0"
 }
 
 
 object BuildPluginsVersion {
-    const val AGP = "7.0.0"
+    const val AGP = "7.0.3"
     const val KOTLIN = "1.5.21"
 
     const val NAVIGATION = "2.3.5"
