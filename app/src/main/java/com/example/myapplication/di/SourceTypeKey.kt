@@ -1,6 +1,6 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.SourceType
 import dagger.MapKey
 
 @MustBeDocumented

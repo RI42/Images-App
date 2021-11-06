@@ -1,15 +1,19 @@
 package com.example.myapplication.data
 
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.myapplication.consts.Consts
 import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.db.model.toEntity
 import com.example.myapplication.data.db.model.toModel
 import com.example.myapplication.domain.ImageRepository
-import com.example.myapplication.domain.model.FilterInfo
 import com.example.myapplication.domain.model.Image
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.FilterInfo
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -2,8 +2,8 @@ package com.example.myapplication.data.db.model
 
 import androidx.room.Entity
 import com.example.myapplication.domain.model.Image
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 import kotlinx.serialization.Serializable
 
 @Serializable

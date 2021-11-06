@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.WorkerThread
 import com.bumptech.glide.Glide
 import com.example.myapplication.domain.model.Image
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.SourceType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

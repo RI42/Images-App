@@ -1,8 +1,8 @@
 package com.example.myapplication.data.network.model
 
 import com.example.myapplication.data.db.model.ImageEntity
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 import kotlinx.serialization.Serializable
 
 @Serializable

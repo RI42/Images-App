@@ -1,11 +1,13 @@
 package com.example.myapplication.ui.history
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.myapplication.domain.model.Image
-import com.example.myapplication.domain.model.FilterInfo
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.FilterInfo
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 import com.example.myapplication.domain.usecase.FilteredImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +22,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
@@ -33,10 +34,10 @@ class HistoryViewModel @Inject constructor(
         savedStateHandle["filterInfo"] ?: FilterInfo(setOf(), setOf())
     )
 
-    val catChecker = MutableLiveData(SourceType.CAT in filterInfo.value.sourceType)
-    val dogChecker = MutableLiveData(SourceType.DOG in filterInfo.value.sourceType)
-    val likedChecker = MutableLiveData(ImageState.LIKE in filterInfo.value.imageState)
-    val dislikedChecker = MutableLiveData(ImageState.DISLIKE in filterInfo.value.imageState)
+    val catChecker = MutableStateFlow(SourceType.CAT in filterInfo.value.sourceType)
+    val dogChecker = MutableStateFlow(SourceType.DOG in filterInfo.value.sourceType)
+    val likedChecker = MutableStateFlow(ImageState.LIKE in filterInfo.value.imageState)
+    val dislikedChecker = MutableStateFlow(ImageState.DISLIKE in filterInfo.value.imageState)
 
     val images = filterInfo
         .onEach { savedStateHandle["filterInfo"] = it }
@@ -50,15 +51,15 @@ class HistoryViewModel @Inject constructor(
     init {
 
         merge(
-            catChecker.asFlow().map { SourceType.CAT to it },
-            dogChecker.asFlow().map { SourceType.DOG to it }
+            catChecker.map { SourceType.CAT to it },
+            dogChecker.map { SourceType.DOG to it }
         )
             .onEach { changeFilter(it) }
             .launchIn(viewModelScope)
 
         merge(
-            likedChecker.asFlow().map { ImageState.LIKE to it },
-            dislikedChecker.asFlow().map { ImageState.DISLIKE to it }
+            likedChecker.map { ImageState.LIKE to it },
+            dislikedChecker.map { ImageState.DISLIKE to it }
         )
             .onEach { changeFilter(it) }
             .launchIn(viewModelScope)

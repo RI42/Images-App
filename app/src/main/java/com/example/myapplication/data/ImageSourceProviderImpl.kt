@@ -1,7 +1,7 @@
 package com.example.myapplication.data
 
-import com.example.myapplication.domain.model.SourceType
 import com.example.myapplication.data.network.TheApi
+import com.example.myapplication.domain.model.filter.SourceType
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton

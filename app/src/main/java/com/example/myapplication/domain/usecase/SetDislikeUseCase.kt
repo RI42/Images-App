@@ -2,7 +2,7 @@ package com.example.myapplication.domain.usecase
 
 import com.example.myapplication.domain.ImageRepository
 import com.example.myapplication.domain.model.Image
-import com.example.myapplication.domain.model.ImageState
+import com.example.myapplication.domain.model.filter.ImageState
 import javax.inject.Inject
 
 

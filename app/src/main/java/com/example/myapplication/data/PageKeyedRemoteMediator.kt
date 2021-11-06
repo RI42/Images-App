@@ -9,8 +9,8 @@ import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.db.model.ImageEntity
 import com.example.myapplication.data.network.TheApi
 import com.example.myapplication.data.network.model.toEntity
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException

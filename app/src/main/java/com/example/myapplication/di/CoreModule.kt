@@ -5,12 +5,12 @@ import androidx.paging.ExperimentalPagingApi
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.consts.Consts
 import com.example.myapplication.data.ImageRepositoryImpl
+import com.example.myapplication.data.ImageSourceProvider
 import com.example.myapplication.data.ImageSourceProviderImpl
 import com.example.myapplication.data.db.AppDatabase
-import com.example.myapplication.domain.ImageRepository
-import com.example.myapplication.data.ImageSourceProvider
-import com.example.myapplication.domain.model.SourceType
 import com.example.myapplication.data.network.TheApi
+import com.example.myapplication.domain.ImageRepository
+import com.example.myapplication.domain.model.filter.SourceType
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module

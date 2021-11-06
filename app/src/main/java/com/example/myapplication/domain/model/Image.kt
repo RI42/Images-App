@@ -1,5 +1,8 @@
 package com.example.myapplication.domain.model
 
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
+
 
 data class Image(
     val id: String,

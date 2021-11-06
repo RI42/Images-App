@@ -13,14 +13,12 @@
             android:id="@+id/cats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@={viewModel.catChecker}"
             android:text="Cats" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/dogs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@={viewModel.dogChecker}"
             android:text="Dogs" />
 
         <View
@@ -32,14 +30,12 @@
             android:id="@+id/liked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@={viewModel.likedChecker}"
             android:text="Liked" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/disliked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@={viewModel.dislikedChecker}"
             android:text="Disliked" />
 
     </LinearLayout>

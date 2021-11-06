@@ -39,10 +39,10 @@ class HistoryFragment : MainNavigationFragment(R.layout.history_fragment) {
             when (it.itemId) {
                 R.id.filter -> {
                     val filterBinding = FilterDialogBinding.inflate(layoutInflater).apply {
-                        cats.isChecked = model.catChecker.value ?: false
-                        dogs.isChecked = model.dogChecker.value ?: false
-                        liked.isChecked = model.likedChecker.value ?: false
-                        disliked.isChecked = model.dislikedChecker.value ?: false
+                        cats.isChecked = model.catChecker.value
+                        dogs.isChecked = model.dogChecker.value
+                        liked.isChecked = model.likedChecker.value
+                        disliked.isChecked = model.dislikedChecker.value
                         cats.setOnCheckedChangeListener { _, isChecked ->
                             model.catChecker.value = isChecked
                         }

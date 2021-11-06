@@ -5,10 +5,10 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
 import com.example.myapplication.data.db.model.ImageEntity
-import com.example.myapplication.domain.model.FilterInfo
-import com.example.myapplication.domain.model.ImageState
-import com.example.myapplication.domain.model.SourceType
 import com.example.myapplication.data.db.utils.BaseDao
+import com.example.myapplication.domain.model.filter.FilterInfo
+import com.example.myapplication.domain.model.filter.ImageState
+import com.example.myapplication.domain.model.filter.SourceType
 
 @Dao
 abstract class ImageDao : BaseDao<ImageEntity>() {

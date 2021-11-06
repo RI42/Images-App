@@ -15,6 +15,9 @@ abstract class BaseDao<T> {
     abstract suspend fun insertOrIgnore(obj: List<T>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertOrReplace(obj: T): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrReplace(obj: List<T>): List<Long>
 
     @Update
@@ -34,13 +37,9 @@ abstract class BaseDao<T> {
     @Transaction
     open suspend fun insertOrUpdate(objList: List<T>) {
         val insertResult = insertOrIgnore(objList)
-        val updateList = mutableListOf<T>()
-
-        for (i in insertResult.indices) {
-            if (insertResult[i] == -1L) {
-                updateList.add(objList[i])
-            }
-        }
+        val updateList = insertResult.withIndex()
+            .filter { (_, insertResult) -> insertResult == -1L }
+            .map { (index, _) -> objList[index] }
 
         if (updateList.isNotEmpty()) {
             update(updateList)
