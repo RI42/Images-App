@@ -4,13 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.myapplication.domain.model.Image
+import com.example.myapplication.domain.usecase.ChangeLikeUseCase
 import com.example.myapplication.domain.usecase.FetchImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
-import com.example.myapplication.domain.usecase.SetDislikeUseCase
-import com.example.myapplication.domain.usecase.SetLikeUseCase
-import com.example.myapplication.domain.model.Image
+import com.example.myapplication.ui.utils.checkCancellationException
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -21,8 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PagerViewModel @Inject constructor(
     private val fetchImagesUseCase: FetchImagesUseCase,
-    private val setLikeUseCase: SetLikeUseCase,
-    private val setDislikeUseCase: SetDislikeUseCase,
+    private val changeLikeUseCase: ChangeLikeUseCase,
     private val saveImageToStorageUseCase: SaveImageToStorageUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -42,37 +40,32 @@ class PagerViewModel @Inject constructor(
     val msg = _msg.asSharedFlow()
 
     init {
-        Timber.d("PagerViewModel $pagerInfo")
+        Timber.d("$pagerInfo")
     }
 
     fun setLike(item: Image) {
         viewModelScope.launch {
-            setLikeUseCase(item)
+            changeLikeUseCase(item, liked = true)
         }
     }
 
     fun setDislike(item: Image) {
         viewModelScope.launch {
-            setDislikeUseCase(item)
+            changeLikeUseCase(item, liked = false)
         }
     }
 
     fun saveImageToStorage(image: Image) {
         isLoading.value = true
         viewModelScope.launch {
-            val minTime = 1000
-            val start = System.currentTimeMillis()
             try {
                 saveImageToStorageUseCase(image)
                 _msg.emit("Saved to Gallery")
             } catch (e: Exception) {
-                _msg.emit("Failed to save image")
+                e.checkCancellationException()
                 Timber.d(e)
+                _msg.emit("Failed to save image")
             } finally {
-                val end = System.currentTimeMillis()
-                if (end - start < minTime) {
-                    delay(minTime - (end - start))
-                }
                 isLoading.value = false
             }
         }

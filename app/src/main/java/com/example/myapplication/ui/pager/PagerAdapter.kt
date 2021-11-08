@@ -3,7 +3,7 @@ package com.example.myapplication.ui.pager
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.myapplication.R
-import com.example.myapplication.domain.model.SourceType
+import com.example.myapplication.domain.model.filter.SourceType
 
 class PagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
     companion object {

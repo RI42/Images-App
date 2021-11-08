@@ -16,6 +16,7 @@ import com.example.myapplication.domain.model.filter.ImageState
 import com.example.myapplication.domain.model.filter.SourceType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +35,11 @@ class ImageRepositoryImpl @Inject constructor(
                 theApi = imageSourceProvider[sourceType],
                 sourceType = sourceType
             )
-        ) { db.imageDao().getNotShownImages(sourceType) }
+        ) {
+
+            db.imageDao().getNotShownImages(sourceType)
+                .also { Timber.tag("PageKeyedRemoteMediator").d("SOURCE") }
+        }
             .flow.map { paging -> paging.map { it.toModel() } }
 
     override suspend fun setState(image: Image, state: ImageState) {

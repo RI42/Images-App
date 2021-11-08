@@ -15,7 +15,7 @@ import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
 
-
+// TODO PAGING Перевести пагинацию на scroll
 @ExperimentalPagingApi
 class PageKeyedRemoteMediator(
     private val db: AppDatabase,
@@ -29,8 +29,8 @@ class PageKeyedRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, ImageEntity>
     ): MediatorResult {
+        Timber.d("loadType: $loadType")
         return try {
-            Timber.d("load: $loadType, state: $state")
             when (loadType) {
                 LoadType.PREPEND -> MediatorResult.Success(endOfPaginationReached = true)
                 else -> {

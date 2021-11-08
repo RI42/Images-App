@@ -9,19 +9,23 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.ListPreloader.PreloadSizeProvider
+import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
 import com.example.myapplication.R
 import com.example.myapplication.databinding.PagerFragmentBinding
 import com.example.myapplication.domain.model.Image
 import com.example.myapplication.ui.pager.PagerViewModel.Companion.PAGE_INFO
 import com.example.myapplication.ui.utils.ImageSavingHelper
 import com.example.myapplication.ui.utils.viewBinding
-import com.example.myapplication.ui.utils.rvUtils.StackLayoutManager
 import com.example.myapplication.ui.utils.viewLifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,46 +57,54 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fadeThrough = MaterialFadeThrough()
+        val requestManager = Glide.with(this)
+        val preloadSize = PreloadSizeProvider<Image> { item, adapterPosition, perItemPosition ->
+            intArrayOf(item.width, item.height)
+        }
+        val adapter = ImageAdapter(requestManager)
+        val preloader = RecyclerViewPreloader(requestManager, adapter, preloadSize, 10)
 
-        val adapter = ImageAdapter(requireContext())
-        val layoutManager = object : StackLayoutManager(horizontalLayout = false, maxViews = 1) {
+
+        val layoutManager = object : LinearLayoutManager(binding.rv.context) {
             override fun canScrollVertically() = false
         }
+        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
 
-        val touchHelper = ItemTouchHelper(
-            object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean = false
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Timber.d("viewHolder.bindingAdapterPosition ${viewHolder.bindingAdapterPosition}")
+                val item = adapter.getItemByPos(viewHolder.bindingAdapterPosition) ?: return
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    Timber.d("viewHolder.bindingAdapterPosition ${viewHolder.bindingAdapterPosition}")
-                    val item = adapter.getItemByPos(viewHolder.bindingAdapterPosition)
-                        ?: error("item not found")
-
-                    when (direction) {
-                        ItemTouchHelper.LEFT -> model.setDislike(item)
-                        ItemTouchHelper.RIGHT -> model.setLike(item)
-                    }
+                when (direction) {
+                    ItemTouchHelper.LEFT -> model.setDislike(item)
+                    ItemTouchHelper.RIGHT -> model.setLike(item)
                 }
+                // TODO PAGING Перевести пагинацию на scroll
+//                binding.rv.smoothScrollToPosition(viewHolder.bindingAdapterPosition + 1)
             }
-        ).apply {
+
+            override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
+                return 0.25f
+            }
+        }).apply {
             attachToRecyclerView(binding.rv)
         }
-
         val snapHelper = PagerSnapHelper().apply {
             attachToRecyclerView(binding.rv)
         }
 
         binding.rv.setHasFixedSize(true)
         binding.rv.layoutManager = layoutManager
+        binding.rv.addOnScrollListener(preloader)
         binding.rv.adapter = adapter
+
         viewLifecycleScope.launchWhenCreated {
             model.images
                 .collectLatest {
@@ -102,12 +114,13 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
 
         fun onClick(view: View) {
             if (binding.rv.isAnimating) return
-            val item = adapter.getItemByPos(layoutManager.findFirstVisibleItemPosition())
-                ?: return
+            val item = adapter.getItemByPos(layoutManager.findFirstVisibleItemPosition()) ?: return
             when (view.id) {
                 R.id.dislike -> model.setDislike(item)
                 R.id.like -> model.setLike(item)
             }
+            // TODO PAGING Перевести пагинацию на scroll
+//            binding.rv.smoothScrollToPosition(layoutManager.findFirstVisibleItemPosition() + 1)
         }
 
         binding.dislike.setOnClickListener(::onClick)
@@ -118,6 +131,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
             saveImage(it, image)
         }
 
+        val fadeThrough = MaterialFadeThrough()
         viewLifecycleScope.launchWhenCreated {
             model.isLoading
                 .onEach {
@@ -125,6 +139,7 @@ class PagerFragment : Fragment(R.layout.pager_fragment) {
                     TransitionManager.beginDelayedTransition(binding.container, fadeThrough)
                     binding.download.isInvisible = it
                     binding.progress.isVisible = it
+                    delay(800)
                 }
                 .launchIn(this)
 

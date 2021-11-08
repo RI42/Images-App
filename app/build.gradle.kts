@@ -83,6 +83,8 @@ dependencies {
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
     implementation(Deps.PAGING)
     implementation(Deps.GLIDE)
+    kapt(Deps.GLIDE_COMPILER)
+    implementation(Deps.GLIDE_RECYCLERVIEW)
 
     implementation("dev.chrisbanes.insetter:insetter:${Versions.INSETTER}")
 

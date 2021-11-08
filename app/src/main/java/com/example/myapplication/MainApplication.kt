@@ -1,11 +1,16 @@
 package com.example.myapplication
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.DEBUG_PROPERTY_NAME
 import kotlinx.coroutines.DEBUG_PROPERTY_VALUE_ON
 import timber.log.Timber
+
 
 @HiltAndroidApp
 class MainApplication : Application() {
@@ -23,5 +28,12 @@ class MainApplication : Application() {
 //            }
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    }
+}
+
+@GlideModule
+class MyGlideModule : AppGlideModule() {
+    override fun applyOptions(context: Context, builder: GlideBuilder) {
+//        builder.setLogLevel(Log.VERBOSE)
     }
 }

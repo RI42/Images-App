@@ -1,7 +1,3 @@
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-
 object Deps {
     const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib:${BuildPluginsVersion.KOTLIN}"
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect:${BuildPluginsVersion.KOTLIN}"
@@ -53,7 +49,10 @@ object Deps {
 
     const val COIL = "io.coil-kt:coil:${Versions.COIL}"
     const val COIL_GIF = "io.coil-kt:coil-gif:${Versions.COIL}"
-    const val GLIDE = "com.github.bumptech.glide:glide:4.12.0"
+    const val glideVersion = "4.12.0"
+    const val GLIDE = "com.github.bumptech.glide:glide:$glideVersion"
+    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:$glideVersion"
+    const val GLIDE_RECYCLERVIEW = "com.github.bumptech.glide:recyclerview-integration:$glideVersion"
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val KOTLINX_SERIALIZATION_CONVERTER = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.KOTLINX_SERIALIZATION_CONVERTER}"
@@ -143,75 +142,3 @@ object AndroidTestDeps {
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO_CORE}"
     const val FRAGMENT_TESTING = "androidx.fragment:fragment-testing:${Versions.FRAGMENT_KTX}"
 }
-
-
-fun DependencyHandlerScope.commonDependencies() {
-    implementation(Deps.STDLIB)
-    implementation(Deps.KOTLIN_REFLECT)
-    implementation(Deps.KOTLINX_COROUTINES_CORE)
-    implementation(Deps.KOTLINX_COROUTINES_ANDROID)
-
-    implementation(Deps.APPCOMPAT)
-    implementation(Deps.VECTORDRAWABLE_ANIMATED)
-    implementation(Deps.EXIFINTERFACE)
-    implementation(Deps.CONSTRAINTLAYOUT)
-    implementation(Deps.CARDVIEW)
-    implementation(Deps.MATERIAL)
-
-    implementation(Deps.COLLECTION_KTX)
-    implementation(Deps.CORE_KTX)
-
-    implementation(Deps.LIFECYCLE_VIEWMODEL_KTX)
-    implementation(Deps.LIFECYCLE_VIEWMODEL_SAVEDSTATE)
-    implementation(Deps.LIFECYCLE_RUNTIME_KTX)
-    implementation(Deps.LIFECYCLE_LIVEDATA_KTX)
-    implementation(Deps.LIFECYCLE_COMMON_JAVA8)
-
-    implementation(Deps.SAVEDSTATE)
-
-    implementation(Deps.ACTIVITY_KTX)
-    implementation(Deps.FRAGMENT_KTX)
-
-    implementation(Deps.NAVIGATION_RUNTIME_KTX)
-    implementation(Deps.NAVIGATION_FRAGMENT_KTX)
-    implementation(Deps.NAVIGATION_UI_KTX)
-
-    implementation(Deps.RETROFIT)
-    implementation(Deps.KOTLINX_SERIALIZATION_JSON)
-
-    implementation(Deps.HILT_ANDROID)
-    kapt(Deps.HILT_COMPILER)
-
-    implementation(Deps.TIMBER)
-
-    implementation(platform(Deps.FIREBASE_BOM))
-    implementation(Deps.FIREBASE_CRASHLYTICS)
-    implementation(Deps.FIREBASE_ANALYTICS)
-
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${BuildPluginsVersion.DETEKT}")
-
-    add("coreLibraryDesugaring", Deps.DESUGAR_JDK_LIBS)
-
-    testImplementation(TestDeps.JUNIT)
-    testImplementation(TestDeps.TEST_CORE)
-    testImplementation(TestDeps.ROBOLECTRIC)
-    androidTestImplementation(AndroidTestDeps.JUNIT)
-}
-
-private fun DependencyHandler.implementation(depName: Any) {
-    add("implementation", depName)
-}
-
-private fun DependencyHandler.kapt(depName: Any) {
-    add("kapt", depName)
-}
-
-private fun DependencyHandler.testImplementation(depName: Any) {
-    add("testImplementation", depName)
-}
-
-private fun DependencyHandler.androidTestImplementation(dependencyNotation: Any): Dependency? =
-    add("androidTestImplementation", dependencyNotation)
-
-fun DependencyHandler.detektPlugins(dependencyNotation: Any): Dependency? =
-    add("detektPlugins", dependencyNotation)

@@ -10,6 +10,7 @@ import com.example.myapplication.domain.model.filter.ImageState
 import com.example.myapplication.domain.model.filter.SourceType
 import com.example.myapplication.domain.usecase.FilteredImagesUseCase
 import com.example.myapplication.domain.usecase.SaveImageToStorageUseCase
+import com.example.myapplication.ui.utils.checkCancellationException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -88,8 +89,9 @@ class HistoryViewModel @Inject constructor(
                 saveImageToStorageUseCase(image)
                 _msg.emit("Saved to Gallery")
             } catch (e: Exception) {
-                _msg.emit("Failed to save image")
+                e.checkCancellationException()
                 Timber.d(e)
+                _msg.emit("Failed to save image")
             } finally {
                 isLoading.value = false
             }
